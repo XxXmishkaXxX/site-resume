@@ -1,26 +1,23 @@
 from django.utils import timezone
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
-from phonenumber_field.modelfields import PhoneNumberField
 from django.db import models
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, user_type, email, number, first_name, second_name,
-                    password, sex='M', **extra_fields):
-        if not email or not number:
-            raise ValueError('Users must have an email address and a phone number')
+    def create_user(self, email, full_name, password, sex='M', **extra_fields):
+        if not email:
+            raise ValueError('Users must have an email address and full_name')
 
         email = self.normalize_email(email)
-        user = self.model(user_type=user_type, email=email, number=number, first_name=first_name,
-                          second_name=second_name, sex=sex, **extra_fields)
+        user = self.model(email=email, full_name=full_name, sex=sex, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, number, first_name, second_name, password, **extra_fields):
-        user = self.create_user(user_type='ADMIN', email=email, number=number, first_name=first_name,
-                                second_name=second_name, password=password, **extra_fields)
+    def create_superuser(self, email, full_name, password, **extra_fields):
+        user = self.create_user(email=email, full_name=full_name, password=password,  **extra_fields)
+        user.set_password(password)
         user.is_superuser = True
         user.is_staff = True
         user.save(using=self._db)
@@ -29,21 +26,8 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 
-    APPLICANT = 'applicant'
-    EMPLOYER = 'employer'
-    ADMIN = 'ADMIN'
-    USER_TYPE_CHOICES = [
-        (APPLICANT, 'Applicant'),
-        (EMPLOYER, 'Employer'),
-        (ADMIN, 'ADMIN')
-    ]
-
-    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, blank=False)
-    email = models.EmailField(unique=True)
-    number = PhoneNumberField(null=False, blank=False, unique=True)
-    first_name = models.CharField(max_length=30, blank=False)
-    second_name = models.CharField(max_length=30, blank=False)
-    patronymic = models.CharField(max_length=30, blank=True, null=True)
+    email = models.EmailField(null=False, blank=False, unique=True)
+    full_name = models.CharField(max_length=200, blank=False, null=False)
     sex = models.CharField(max_length=10, choices=(('M', 'Male'), ('F', 'Female')), default='M')
 
     date_joined = models.DateTimeField(default=timezone.now)
@@ -55,7 +39,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['number', 'first_name', 'second_name']
+    REQUIRED_FIELDS = ['full_name', 'sex']
 
     def __str__(self):
         return self.email
+
+    class Meta:
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+        ordering = ['-date_joined']

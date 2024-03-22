@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 # Получение SECRET_KEY из переменной окружения django_key
 
 
@@ -46,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'phonenumber_field',
     'main',
-    'user'
+    'user',
 ]
 
 MIDDLEWARE = [
