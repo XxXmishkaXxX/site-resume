@@ -1,0 +1,567 @@
+body{
+  font-family: ResistSansText, sans-serif;
+  overflow-x: hidden;
+}
+@font-face {
+  font-family: "ResistSansText";
+  font-style: normal;
+  font-weight: 400;
+  /* Браузер сначала попробует найти шрифт локально */
+  src: local("ResistSansText"),
+       /* Если не получилось, загрузит woff2 */
+       url("static/fonts/ResistSansText-Regular.ttf") format("ttf"),
+}
+
+
+
+
+/* шапка и контент */
+.bg-navbar{
+  background-color: #FBF3F3;
+}
+.btn-top-border{
+  border-radius: 30px;
+}
+
+.logo-name{
+  margin-left:10%;
+  font-size:40px;
+}
+
+.logo-button{
+  margin-right:13.5%;
+
+}
+
+.text-b-line{
+  color:black;
+
+}
+.text-b-line:hover{
+  text-decoration: underline;
+  color:black;
+}
+.btn-glav{
+  position: relative;
+  left: 50%;
+  top: 50%;
+}
+/* масло пнг */
+.maslo-container {
+  position: relative;
+  text-align: center;
+
+}
+.maslo-centered {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1200px;
+}
+.btn-maslo{
+  position: relative;
+  width: 550px;
+  height: 103px;
+  font-size:50px;
+  background-color: #56A9ED;
+  border-radius: 50px;
+  font-weight: 500;
+  top: -50px;
+}
+.btn-maslo:hover{
+  background-color:#4B95D2;
+  text-align: center;
+}
+.promo-block {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  background: url(/static/image/index/maslo.png) no-repeat;
+  background-size: cover;
+  background-position: center center;
+  padding: 300px 0 200px;
+}
+
+.promo-block:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.promo-block .promo-block-title {
+  font-size: 120px;
+  color: black;
+}
+
+.promo-block-title{
+  position: relative;
+  top: -100px;
+}
+
+.promo-block .promo-block-text {
+  font-size: 25px;
+  color: #fff;
+}
+/* блок */
+.block-center{
+  position: relative;
+  width: 80%;
+  height: 790px;
+  background-color: #FBF3F3;
+  border-radius: 20px;
+  top:-100px;
+  left: 10%;
+  z-index: 2;
+}
+.block-center-go{
+  position: relative;
+  top:19.5%;
+  left: 10.5%;
+}
+.block1{
+  width: 500px;
+  height: 90px;
+  background-color: red;
+  z-index: 100;
+  position: relative;
+  left: 20%;
+  top: 60%;
+}
+
+.chto-takoe{
+  padding-top: 80px;
+  font-size:60px;
+}
+
+/* Анимации блока что это флдыовфыловтфылвт */
+.one-center {
+  position: relative;
+  width: 42%;
+  height: 120px;
+  background-color: #fff;
+  overflow: hidden;
+  animation: slideRight-block 2s forwards;
+  left: 10%;
+  top: -650px;
+  border-radius: 0 60px 60px 0;
+  z-index: 3;
+  transform: translateX(-30px);
+}
+.animated-text-center {
+  position: absolute;
+  left: -150px;
+  top: 50%;
+  font-size: 45px;
+  transform: translateY(-50%);
+  animation: slideRight-text 3s forwards; /* Продолжительность анимации 2 секунды */
+}
+@keyframes slideRight-block {
+  0% {
+
+    left: -50%;
+
+  }
+  50% {
+    left: 10%;
+
+  }
+  100% {
+    left: 10%;
+  }
+}
+
+@keyframes slideRight-text {
+  0% {
+
+    left: -50%;
+    opacity: 0;
+  }
+  50% {
+    left: 16%;
+
+  }
+  100% {
+    left: 16%;
+    opacity: 1;
+  }
+}
+/* анимация второго блока справа */
+.two-center {
+  position: relative;
+  width: 48%;
+  height: 120px;
+  background-color: #fff;
+  overflow: hidden;
+  animation: slideRight2-block 3.5s forwards;
+  left: 2%;
+  top: -600px;
+  border-radius: 60px 0 0 60px;
+  z-index: 3;
+  transform: translateX(92%);
+}
+.animated-text-sprava {
+  position: absolute;
+  left: 2%;
+  top: 60px;
+  font-size: 45px;
+  transform: translateY(-50%);
+  animation: slideRight2-text 4s forwards; /* Продолжительность анимации 2 секунды */
+}
+
+@keyframes slideRight2-block {
+  0% {
+
+    left: 50%;
+
+  }
+  50% {
+    left: 0%;
+
+  }
+  100% {
+    left: 0%;
+  }
+}
+
+@keyframes slideRight2-text {
+  0% {
+
+    left: 40%;
+    opacity: 0;
+  }
+  50% {
+    left: 18%;
+
+  }
+  100% {
+    left: 18%;
+    opacity: 1;
+  }
+}
+
+/* анимация третьего блока слева */
+.three-center {
+  position: relative;
+  width: 42%;
+  height: 120px;
+  background-color: #fff;
+  overflow: hidden;
+  animation: slideRight3-block 3.5s forwards;
+  left: 2%;
+  top: -550px;
+  border-radius:  0 60px 60px 0 ;
+  z-index: 3;
+  transform: translateX(-30px);
+}
+.animated-text-sleva {
+  position: absolute;
+  left: 150px;
+  top: 50%;
+  font-size: 45px;
+  transform: translateY(-50%);
+  animation: slideRight3-text 4s forwards; /* Продолжительность анимации 2 секунды */
+}
+
+@keyframes slideRight3-block {
+  0% {
+
+    left: -50%;
+
+  }
+  50% {
+    left: 10%;
+
+  }
+  100% {
+    left: 10%;
+  }
+}
+
+@keyframes slideRight3-text {
+  0% {
+
+    left: -50%;
+    opacity: 0;
+  }
+  50% {
+    left: 16.5%;
+
+  }
+  100% {
+    left: 16.5%;
+    opacity: 1;
+  }
+}
+
+
+/* SLIDER */
+.car-img{
+  position: relative;
+  top: -20vh;
+}
+
+/* команда */
+.text-teams{
+  position: relative;
+  z-index: 1;
+}
+
+/* АДАПТИВ ПОД УСТРОЙСТВА */
+@media only screen and (max-width: 1100px) {
+
+  .logo-name{
+    margin-left: 0%;
+  }
+  .logo-button{
+    margin-right:0%;
+  }
+
+
+  /* текст и блок цетр  */
+  .promo-block .promo-block-title {
+    font-size: 55px;
+  }
+  .btn-maslo{
+    width: 250px;
+    height: 70px;
+    font-size:25px;
+    background-color: #56A9ED;
+    border-radius: 40px;
+  }
+  .chto-takoe{
+    font-size: 30px;
+  }
+
+  .one-center {
+    position: relative;
+    width: 42%;
+    height: 90px;
+    background-color: #fff;
+    overflow: hidden;
+    animation: slideRight-block 2s forwards;
+    left: 10%;
+    top: -680px;
+    border-radius: 0 30px 30px 0;
+    z-index: 3;
+    transform: translateX(-5px);
+  }
+  .animated-text-center {
+    position: absolute;
+    left: -150vh;
+    top: 50%;
+    font-size: 22px;
+    transform: translateY(-50%);
+    animation: slideRight-text 2.5s forwards;
+  }
+
+
+
+
+
+  /* анимация второго блока справа */
+  .two-center {
+    position: relative;
+    width: 42%;
+    height: 90px;
+    background-color: #fff;
+    overflow: hidden;
+    animation: slideRight2-block 3.5s forwards;
+    left: 2%;
+    top: -638px;
+    border-radius: 30px 0 0 30px;
+    z-index: 3;
+    transform: translateX(55%);
+  }
+  .animated-text-sprava {
+    position: absolute;
+    left: 2%;
+    top: 45px;
+    font-size: 22px;
+    transform: translateY(-47%);
+    animation: slideRight2-text 4s forwards; /* Продолжительность анимации 2 секунды */
+  }
+
+  @keyframes slideRight2-block {
+    0% {
+
+      left: 50%;
+
+    }
+    50% {
+      left: 25%;
+
+    }
+    100% {
+      left: 25%;
+    }
+  }
+
+
+
+
+  /* анимация третьего блока слева */
+  .three-center {
+    position: relative;
+    width: 52%;
+    height: 90px;
+    background-color: #fff;
+    overflow: hidden;
+    animation: slideRight3-block 3.5s forwards;
+    left: 2%;
+    top: -600px;
+    border-radius:  0 30px 30px 0 ;
+    z-index: 3;
+    transform: translateX(-10px);
+  }
+  .animated-text-sleva {
+    position: absolute;
+    left: -150px;
+    top: 50%;
+    font-size: 22px;
+    transform: translateY(-50%);
+    animation: slideRight3-text 4s forwards; /* Продолжительность анимации 2 секунды */
+  }
+
+/* Команда проекта */
+.podnyal{
+  position: relative;
+  top: 50%;
+}
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+  /* масло пнг */
+  .h2text-maslo{
+    font-size: 20px;
+
+}
+@media (max-width: 480px) {
+  .promo-block .promo-block-title {
+    font-size: 35px;
+  }
+  .btn-maslo{
+    width: 250px;
+    height: 70px;
+    font-size:25px;
+    background-color: #56A9ED;
+    border-radius: 40px;
+  }
+  .chto-takoe{
+    font-size: 30px;
+  }
+  .one-center {
+    position: relative;
+    width: 52%;
+    height: 90px;
+    background-color: #fff;
+    overflow: hidden;
+    animation: slideRight-block 2s forwards;
+    left: 10%;
+    top: -680px;
+    border-radius: 0 30px 30px 0;
+    z-index: 3;
+    transform: translateX(-1%);
+  }
+  .animated-text-center {
+    position: absolute;
+    left: -150%;
+    top: 50%;
+    font-size: 22px;
+    transform: translateY(-50%);
+    animation: slideRight-text 2.5s forwards;
+  }
+  /* анимация второго блока справа */
+  .two-center {
+    position: relative;
+    width: 55%;
+    height: 90px;
+    background-color: #fff;
+    overflow: hidden;
+    animation: slideRight2-block 3.5s forwards;
+    left: 2%;
+    top: -638px;
+    border-radius: 30px 0 0 30px;
+    z-index: 3;
+    transform: translateX(265px);
+  }
+  .animated-text-sprava {
+    position: absolute;
+    left: 2%;
+    top: 45px;
+    font-size: 22px;
+    transform: translateY(-50%);
+    animation: slideRight2-text 4s forwards; /* Продолжительность анимации 2 секунды */
+  }
+
+  @keyframes slideRight2-block {
+    0% {
+
+      left: 50%;
+
+    }
+    50% {
+      left: -20%;
+
+    }
+    100% {
+      left: -20%;
+    }
+  }
+
+  @keyframes slideRight2-text {
+    0% {
+
+      left: 40%;
+      opacity: 0;
+    }
+    50% {
+      left: 16%;
+
+    }
+    100% {
+      left: 16%;
+      opacity: 1;
+    }
+  }
+
+  /* анимация третьего блока слева */
+  .three-center {
+    position: relative;
+    width: 52%;
+    height: 90px;
+    background-color: #fff;
+    overflow: hidden;
+    animation: slideRight3-block 3.5s forwards;
+    left: 2%;
+    top: -600px;
+    border-radius:  0 30px 30px 0 ;
+    z-index: 3;
+    transform: translateX(-10px);
+  }
+  .animated-text-sleva {
+    position: absolute;
+    left: -150px;
+    top: 50%;
+    font-size: 22px;
+    transform: translateY(-50%);
+    animation: slideRight3-text 4s forwards; /* Продолжительность анимации 2 секунды */
+  }
+}
