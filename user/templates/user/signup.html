@@ -1,18 +1,88 @@
-
 {% load i18n %}
 
 {% block inner %}
-<h1>{% trans "Sign Up" %}</h1>
 
-<p>Already have an account? Then please <a href="{% url 'login' %}">sign in</a>.</p>
+    <style>
+  .container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  }
 
-<form class="signup" id="signup_form" method="post" action="{% url 'signup' %}">
-  {% csrf_token %}
-  {{ form }}
-  {% if redirect_field_value %}
-    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <button class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
-</form>
+  h1 {
+    text-align: center;
+  }
 
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+
+  .login-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+  }
+</style>
+
+<div class="container">
+  <h1>{% trans "Sign Up" %}</h1>
+
+  <p>{% trans "Already have an account? Then please" %} <a href="{% url 'login' %}">{% trans "sign in" %}</a>.</p>
+
+  <form class="signup" id="signup_form" method="post" action="{% url 'signup' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+      {{ form.email.label_tag }}
+      {{ form.email }}
+    </div>
+    <div class="mb-3">
+      {{ form.password1.label_tag }}
+      {{ form.password1 }}
+    </div>
+    <div class="mb-3">
+      {{ form.password2.label_tag }}
+      {{ form.password2 }}
+    </div>
+    {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <button class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
+  </form>
+</div>
 {% endblock %}

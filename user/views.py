@@ -1,6 +1,5 @@
-from allauth.account.models import EmailAddress
 from django.shortcuts import render, redirect
-from allauth.account.views import SignupView, LoginView, ConfirmEmailView
+from allauth.account.views import SignupView, LoginView, EmailVerificationSentView
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import logout
@@ -41,5 +40,8 @@ class CustomLogoutView(RedirectView):
     def get(self, request, *args, **kwargs):
         logout(request)
         return super().get(request, *args, **kwargs)
+
+
+
 
 
