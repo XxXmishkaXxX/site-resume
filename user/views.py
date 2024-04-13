@@ -5,8 +5,19 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.views.generic import RedirectView
-from django.urls import reverse
 from .forms import CustomSignupForm
+from allauth.account.models import EmailAddress
+from django.http import JsonResponse
+
+
+def check_email_confirmation(request):
+    if request.user.is_authenticated:
+        user = request.user
+        # Проверяем, есть ли подтвержденный адрес электронной почты у пользователя
+        email_confirmed = EmailAddress.objects.filter(user=user, verified=True).exists()
+        return JsonResponse({'confirmed': email_confirmed})
+    else:
+        return JsonResponse({'error': 'User is not authenticated'})
 
 
 class CustomSignupView(SignupView):
@@ -41,5 +52,3 @@ class CustomLogoutView(RedirectView):
     def get(self, request, *args, **kwargs):
         logout(request)
         return super().get(request, *args, **kwargs)
-
-

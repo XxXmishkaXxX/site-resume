@@ -16,3 +16,7 @@
 </form>
 
 {% endblock %}
+{% load static %}
+{% block extra_head %}
+  <script src="{% static 'js/check_confirm_email.js' %}"></script>
+{% endblock %}
