@@ -1,18 +1,56 @@
-
 {% load i18n %}
-
+{% load static %}
 {% block inner %}
-<h1>{% trans "Sign Up" %}</h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<p>Already have an account? Then please <a href="{% url 'login' %}">sign in</a>.</p>
+<style>
+    /* Стили для уведомлений */
+    .alert {
+        position: fixed;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        width: 300px;
+        opacity: 0;
+        transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    }
 
-<form class="signup" id="signup_form" method="post" action="{% url 'signup' %}">
-  {% csrf_token %}
-  {{ form }}
-  {% if redirect_field_value %}
-    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <button class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
-</form>
+    .alert.show {
+        top: 50px;
+        opacity: 1;
+    }
+</style>
 
+<div id="alerts"></div>
+<div class="container">
+  <h1>{% trans "Sign Up" %}</h1>
+
+  <p>{% trans "Already have an account? Then please" %} <a href="{% url 'login' %}">{% trans "sign in" %}</a>.</p>
+
+  <form class="signup" id="signup_form" method="post" action="{% url 'signup' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+      {{ form.email.label_tag }}
+      {{ form.email }}
+    </div>
+    <div class="mb-3">
+      {{ form.password1.label_tag }}
+      {{ form.password1 }}
+    </div>
+    <div class="mb-3">
+      {{ form.password2.label_tag }}
+      {{ form.password2 }}
+    </div>
+    {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <button class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
+  </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'js/check_confirm_email.js' %}"></script>
 {% endblock %}
