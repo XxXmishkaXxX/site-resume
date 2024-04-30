@@ -1,159 +1,238 @@
 {% load static %}
+{% load main_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/style/style-base.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/bootstrap-icons/font/bootstrap-icons.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/style/style-base.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap-icons/font/bootstrap-icons.min.css' %}"/>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
     <title>Title</title>
+    <style>
+        .menu {
+            position: relative;
+            z-index: 2;
+        }
+
+        .menu nav {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: none;
+            background-color: white; /* Добавляем фон для более явного отображения */
+            border: 1px solid black; /* Добавляем рамку для более явного отображения */
+        }
+
+        .menu nav.show {
+            display: block;
+        }
+
+    </style>
 </head>
 <body>
 
 <!--                                ШАПКА                           -->
 
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-navbar">
-        <div class="container-fluid">
-            <a href="#" class="navbar-brand logo-name text-b-line"><b>НАЗВАНИЕ</b></a>
-            <button type="button" class="navbar-toggler logo-button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav">
-                  <!-- если что добавить под бутер -->
-                </div>
-                <div class="navbar-nav ms-auto logo-button">
-
-                        <br><button class="btn btn-outline-dark btn-top-border razmer-top-btn" type="button"
-                                    onclick="window.location.href='{% url 'login' %}'">
-                                Войти
-                            </button>
-                </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-navbar">
+    <div class="container-fluid">
+        <a href="#" class="navbar-brand logo-name text-b-line"><b>НАЗВАНИЕ</b></a>
+        <button type="button" class="navbar-toggler logo-button" data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav">
+                <!-- если что добавить под бутер -->
+            </div>
+            <div class="navbar-nav ms-auto logo-button">
+                {% if user.is_authenticated %}
+                {% if user.userprofile %}
+                    <!-- Показать аватар и имя пользователя -->
+                    <div>
+                        <img src="{{ user.userprofile.avatar.url }}" alt="Avatar" style="max-width: 50px">
+                        {{ user.userprofile.full_name | remove_middle_name }}
+                    </div>
+                    <div class="menu">
+                        <button>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-list" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                      d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                            </svg>
+                        </button>
+                        <nav class="menu">
+                            <ul>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'profile_user' user.pk %}">Профиль</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'edit_profile' user.pk %}">Редактирование профиля</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Поддержка</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                {% else %}
+                    <!-- Перенаправить пользователя на создание профиля -->
+                    <button class="btn btn-outline-dark btn-top-border razmer-top-btn" type="button"
+                            onclick="window.location.href='{% url 'create_profile' %}'">
+                        Создать профиль
+                    </button>
+                {% endif %}
+                {% else %}
+                    <!-- Перенаправить неавторизованного пользователя на страницу входа -->
+                    <button class="btn btn-outline-dark btn-top-border razmer-top-btn" type="button"
+                            onclick="window.location.href='{% url 'login' %}'">
+                        Войти
+                    </button>
+                {% endif %}
             </div>
         </div>
-    </nav>
-
-
+    </div>
+</nav>
 
 
 <!--                              КОНТЕНТ                               -->
-    {% block content %}
-    {% endblock %}
-
+{% block content %}
+{% endblock %}
 
 
 <!--ПОДВАЛ -->
 <!-- Footer -->
 <footer class="text-center text-lg-start text-muted" style="background-color:#EDE7E7;">
-  <!-- Section: Social media -->
-  <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-    <!-- Left -->
-    <div class="me-5 d-none d-lg-block">
-      <span>Свяжитесь с нами в социальных сетях:</span>
-    </div>
-    <!-- Left -->
-
-    <!-- Right -->
-    <div class="">
-      <a href="" class="me-4 text-reset"><img src="static/image/index/footer/vk.svg" alt=""></a>
-      <a href="" class="me-4 text-reset"><img src="static/image/index/footer/telegram.svg" alt="telegram"></a>
-      <a href="" class="me-4 text-reset"><img src="static/image/index/footer/whatsapp.svg" alt="whatsapp"></a>
-    </div>
-    <!-- Right -->
-  </section>
-  <!-- Section: Social media -->
-
-  <!-- Section: Links  -->
-  <section class="">
-    <div class="container text-center text-md-start mt-5">
-      <!-- Grid row -->
-      <div class="row mt-3">
-        <!-- Grid column -->
-        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-          <!-- Content -->
-          <h6 class="text-uppercase fw-bold mb-4">
-          </i>НАЗВАНИИЕ
-          </h6>
-          <p>
-            Проект разработан при поддержке Уральского федерального университета имени Первого Президента России Б. Н. Ельцина, с 1 марта 2024 года, в рамках проектного практикума.
-          </p>
+    <!-- Section: Social media -->
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+        <!-- Left -->
+        <div class="me-5 d-none d-lg-block">
+            <span>Свяжитесь с нами в социальных сетях:</span>
         </div>
-        <!-- Grid column -->
+        <!-- Left -->
 
-        <!-- Grid column -->
-        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-          <!-- Links -->
-          <h6 class="text-uppercase fw-bold mb-4">
-            Профиль
-          </h6>
-          <p>
-            <a href="#!" class="text-reset">Перейти</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">Редактировать профиль</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">Посмотреть галерею</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">еще мб</a>
-          </p>
+        <!-- Right -->
+        <div class="">
+            <a href="" class="me-4 text-reset"><img src="static/image/index/footer/vk.svg" alt=""></a>
+            <a href="" class="me-4 text-reset"><img src="static/image/index/footer/telegram.svg" alt="telegram"></a>
+            <a href="" class="me-4 text-reset"><img src="static/image/index/footer/whatsapp.svg" alt="whatsapp"></a>
         </div>
-        <!-- Grid column -->
+        <!-- Right -->
+    </section>
+    <!-- Section: Social media -->
 
-        <!-- Grid column -->
-        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-          <!-- Links -->
-          <h6 class="text-uppercase fw-bold mb-4">
-            Пользователь
-          </h6>
-          <p>
-            <a href="#!" class="text-reset">Войти</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">Регитсрация</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">еще чето</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">Help</a>
-          </p>
-        </div>
-        <!-- Grid column -->
+    <!-- Section: Links  -->
+    <section class="">
+        <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <!-- Content -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        </i>НАЗВАНИИЕ
+                    </h6>
+                    <p>
+                        Проект разработан при поддержке Уральского федерального университета имени Первого Президента
+                        России Б. Н. Ельцина, с 1 марта 2024 года, в рамках проектного практикума.
+                    </p>
+                </div>
+                <!-- Grid column -->
 
-        <!-- Grid column -->
-        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-          <!-- Links -->
-          <h6 class="text-uppercase fw-bold mb-4">Контакты</h6>
-          <p>Екатеринбург, Мира 32.</p>
-          <p>info@example.com</p>
-          <p>+ 7 (343) 534 33 22</p>
-          <p>+ 7 (343) 534 33 44</p>
+                <!-- Grid column -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Профиль
+                    </h6>
+                    <p>
+                        <a href="#!" class="text-reset">Перейти</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Редактировать профиль</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Посмотреть галерею</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">еще мб</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Пользователь
+                    </h6>
+                    <p>
+                        <a href="#!" class="text-reset">Войти</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Регитсрация</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">еще чето</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Help</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">Контакты</h6>
+                    <p>Екатеринбург, Мира 32.</p>
+                    <p>info@example.com</p>
+                    <p>+ 7 (343) 534 33 22</p>
+                    <p>+ 7 (343) 534 33 44</p>
+                </div>
+                <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
         </div>
-        <!-- Grid column -->
-      </div>
-      <!-- Grid row -->
-    </div>
-  </section>
-  <!-- Section: Links  -->
+    </section>
+    <!-- Section: Links  -->
 
 </footer>
 <!-- Footer -->
 
 
-
-
-
-
-
-
-
-
-
 <script src="{% static 'js/bootstrap.js' %}"></script>
+<script>
+    // Получаем ссылки на элементы DOM
+    const menuButton = document.querySelector('.menu button');
+    const navMenu = document.querySelector('.menu nav');
+
+    // Скрываем меню при загрузке страницы
+    navMenu.style.display = 'none';
+
+    // Добавляем обработчик события клика на кнопку бургер-меню
+    menuButton.addEventListener('click', () => {
+        // Переключаем отображение меню
+        if (navMenu.style.display === 'none') {
+            navMenu.style.display = 'block';
+        } else {
+            navMenu.style.display = 'none';
+        }
+    });
+
+    // Добавляем обработчик события клика на ссылки в меню для закрытия меню
+    navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            // Скрываем меню после клика на ссылку
+            navMenu.style.display = 'none';
+        });
+    });
+
+</script>
 </body>
 </html>
