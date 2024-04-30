@@ -1,0 +1,83 @@
+
+/* Стили для уведомлений */
+.alert {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 300px;
+    opacity: 0;
+    transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.alert.show {
+    top: 50px;
+    opacity: 1;
+}
+
+/* позиция формы */
+.pos-auth{
+  position: relative;
+  left: 10vh;
+  top: 25vh;
+}
+
+
+/* лого */
+
+.logo-name-auth{
+  font-size:40px;
+  position: relative;
+  left: 20vh;
+  top:5vh;
+}
+
+/* сама форма */
+.reg-all-input {
+  border-radius: 20px;
+  width: 420px;
+  height: 60px;
+  border: 2px solid #56A9ED;
+  border-color: #56A9ED;
+
+}
+.reg-all-input:focus {
+  border: 2px solid #56A9ED;
+  border-color: #56A9ED;
+  box-shadow: none; /* Убрать тень обводки при фокусе */
+  border-color: initial; /* Убрать цвет обводки при фокусе */
+}
+.reg-all-input:hover {
+  border: 2px solid #56A9ED;
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Плавная обводка */
+}
+@media (max-width: 480px) {
+  .container.pos-auth {
+    padding: 20px;
+  }
+  .mb-3 {
+    margin-bottom: 15px;
+  }
+  .reg-all-input {
+    width: 100%;
+  }
+  .btn {
+    width: 100%;
+  }
+  .logo-name-auth{
+    font-size:40px;
+    position: relative;
+    left: 11vh;
+    top:5vh;
+  }
+  /* позиция формы */
+  .pos-auth{
+    position: relative;
+    left: 0vh;
+    top: 15vh;
+  }
+
+  /* стили для login html */
+
+}

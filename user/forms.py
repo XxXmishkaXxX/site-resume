@@ -1,7 +1,6 @@
 from allauth.account.forms import SignupForm
 from django import forms
 from django.core.exceptions import ValidationError
-
 from .models import CustomUser
 
 
@@ -12,9 +11,11 @@ class CustomSignupForm(SignupForm):
         allowed_domains = ['gmail.com', 'mail.ru', 'yandex.ru']
         domain = email.split('@')[-1]
         if domain not in allowed_domains:
+            self.add_error('email', "Недопустимый почтовый домен.")
             raise ValidationError("Недопустимый почтовый домен.")
 
         if CustomUser.objects.filter(email=email).exists():
+            self.add_error('email', "Этот адрес электронной почты уже зарегистрирован.")
             raise ValidationError("Этот адрес электронной почты уже зарегистрирован.")
 
         return email

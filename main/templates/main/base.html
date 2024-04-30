@@ -26,9 +26,17 @@
                   <!-- если что добавить под бутер -->
                 </div>
                 <div class="navbar-nav ms-auto logo-button">
-                        <br><button class="btn btn-outline-dark btn-top-border razmer-top-btn" type="submit">
-                              &nbsp;&nbsp;&nbsp;&nbsp; Войти &nbsp;&nbsp;&nbsp;&nbsp;
+
+                  {% if request.user.is_authenticated %}
+                  <i class="bi bi-person-fill" class="margin-top:50px;"></i>
+                  <button class="btn btn-outline-dark btn-top-border razmer-top-btn" type="button"
+                              onclick="window.location.href='{% url 'logout' %}'">Выйти
+                      </button>
+                      {% else %}
+                        <br><button class="btn btn-outline-dark btn-top-border razmer-top-btn" type="button"
+                                    onclick="window.location.href='{% url 'login' %}'">Войти
                             </button>
+                            {% endif %}
                 </div>
             </div>
         </div>
