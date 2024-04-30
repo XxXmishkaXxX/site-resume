@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style/style-base.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style/style-auth.css' %}" />
+    <title>Login</title>
+
+</head>
+<body>
+  <!-- уведомления -->
+    <div id="alerts"></div>
+
+    <!-- лого -->
+    <a href="#" class="navbar-brand logo-name-auth text-b-line" ><b>НАЗВАНИЕ</b></a>
+
+    <!-- ФОРМА -->
+<div class="container pos-auth">
+    <h1 class="mb-4" style="font-size:40px; font-weight: bold;">Авторизация</h1>
+    <p>У вас нет учетной записи? Тогда, пожалуйста  <a href="{% url 'signup' %}">зарегистрируйтесь</a></p>
+    <form class="login" id="login_form" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <input type="email" name="login" class="reg-all-input  px-3" placeholder="Email address" autocomplete="email" maxlength="320" required="" id="id_login">
+        </div>
+
+        <div class="mb-3">
+          <input type="password" name="password" class="reg-all-input  px-3" placeholder="Password" autocomplete="current-password" required="" aria-describedby="id_password_helptext" id="id_password">
+          <br><br>
+          <span class="helptext" id="id_password_helptext" style="display: block;"><a href="/accounts/password/reset/">Забыли пароль?</a></span>
+        </div>
+
+        <div class="mb-3">
+          <label for="id_remember">Запомнить меня:</label>
+          <input type="checkbox" name="remember" id="id_remember">
+        </div>
+
+        <div class="mb-3">
+          <button type="submit" class="btn btn-primary mt-3">Login</button>
+        </div>
+    </form>
+</div>
+
+<!-- фото -->
+
+<div class="position-absolute top-0 end-0 d-none d-lg-block" style="width: 540px;">
+  <img src="{% static 'image/auth/login.jpg' %}" alt="Изображение" class="img-fluid h-100">
+</div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'js/check_user_data.js' %}"></script>
+</html>

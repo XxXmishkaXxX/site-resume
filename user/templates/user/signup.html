@@ -1,0 +1,72 @@
+{% load i18n %}
+{% load static %}
+{% block inner %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/style/style-base.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/style/style-auth.css' %}" />
+</head>
+<style>
+
+</style>
+<!-- уведомления -->
+<div id="alerts"></div>
+
+
+
+<!-- лого -->
+<a href="#" class="navbar-brand logo-name-auth text-b-line" ><b>НАЗВАНИЕ</b></a>
+
+<!-- ФОРМА -->
+<div class="container pos-auth">
+  <h1 class="mb-4" style="font-size:40px; font-weight: bold;">{% trans "Регистрация" %}</h1>
+
+  <p>{% trans "У вас уже есть аккаунт? Тогда, пожалуйста" %} <a href="{% url 'login' %}">{% trans "войдите" %}</a>.</p>
+  <br>
+  <form class="signup " id="signup_form" method="post" action="{% url 'signup' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+      <input type="email" name="email" class="reg-all-input  px-3" placeholder="example@mail.ru" autocomplete="email" maxlength="320" required="" id="id_email" >
+    </div>
+    <div class="mb-3">
+      <input type="password" name="password1" class="reg-all-input  px-3" placeholder="Пароль" autocomplete="new-password" required="" aria-describedby="id_password1_helptext" id="id_password1" aria-autocomplete="list">
+    </div>
+    <div class="mb-3">
+      <input type="password" name="password2" class="reg-all-input  px-3" placeholder="Повторение пароля" autocomplete="new-password" required="" id="id_password2">
+    </div>
+    {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <button class="btn btn-primary mt-4" type="submit">{% trans "Регистрация" %}</button>
+  </form>
+</div>
+<!-- фото -->
+
+<div class="position-absolute top-0 end-0 d-none d-lg-block" style="width: 540px;">
+  <img src="{% static 'image/auth/reg.jpg' %}" alt="Изображение" class="img-fluid h-100">
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="{% static 'js/check_confirm_email.js' %}"></script>
+{% endblock %}
