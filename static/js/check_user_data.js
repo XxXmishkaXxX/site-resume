@@ -6,14 +6,9 @@ $(document).ready(function () {
             url: $(this).attr('action'),
             type: $(this).attr('method'),
             data: $(this).serialize(),
-            success: function (data) {
-                if (data.email_confirmed) {
-                    window.location.href = '/feed/';
-                } else {
-                    showAlert('Ваша почта не подтверждена. Пожалуйста, подтвердите свой адрес электронной почты.',
-                        'alert-warning');
-                }
-            },
+            success: function () {
+                   checkEmailConfirmation()
+             },
             error: function (xhr) {
                 var errorData = JSON.parse(xhr.responseText);
 
@@ -52,4 +47,20 @@ $(document).ready(function () {
             }, 5000);
         }, 5000);
     }
-});
+
+    function checkEmailConfirmation() {
+        $.ajax({
+            url: '/accounts/check-email-confirmation/',
+            type: 'GET',
+            success: function (data) {
+                if (data.confirmed) {
+                    window.location.href = '/feed/'
+                } else {
+                    showAlert('Ваша почта не подтверждена. Пожалуйста, подтвердите свой адрес электронной почты.',
+                        'alert-warning');
+                }
+            }
+        })
+    }
+})
+
