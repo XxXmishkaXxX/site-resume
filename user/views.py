@@ -1,9 +1,8 @@
 import json
 
 from django.shortcuts import render, redirect, reverse
-from allauth.account.views import SignupView, LoginView, EmailVerificationSentView, ConfirmEmailView
+from allauth.account.views import SignupView, LoginView, ConfirmEmailView
 from django.urls import reverse_lazy
-from django.contrib import messages
 from django.contrib.auth import logout
 from django.views.generic import RedirectView
 from .forms import CustomSignupForm

@@ -20,7 +20,6 @@ class CustomSignupForm(SignupForm):
 
         return email
 
-
     def save(self, request):
         user = super(CustomSignupForm, self).save(request)
         user.save()

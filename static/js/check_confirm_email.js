@@ -26,7 +26,7 @@ $(document).ready(function (o, v) {
 
     function checkEmailConfirmation() {
         $.ajax({
-            url: 'check-email-confirmation/',
+            url: '/accounts/check-email-confirmation/',
             type: 'GET',
             success: function (data) {
 
@@ -36,7 +36,7 @@ $(document).ready(function (o, v) {
                         'alert-success');
 
                     setTimeout(function () {
-                        window.location.href = '/create-profile/';
+                        window.location.href = '/profile/create/';
                     }, 5000);
                 } else {
 
