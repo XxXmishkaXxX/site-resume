@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.views import View
-from profiles.models import UserProfile
 
 
 # Create your views here.

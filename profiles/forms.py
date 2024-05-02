@@ -6,20 +6,6 @@ from .models import UserProfile
 
 class UserProfileForm(forms.ModelForm):
 
-    def __init__(self, *args, **kwargs):
-        instance = kwargs.get('instance')
-        initial = kwargs.get('initial', {})
-        if instance:
-            initial['full_name'] = instance.full_name
-            initial['sex'] = instance.sex
-            initial['bio'] = instance.bio
-            initial['country'] = instance.country
-            initial['city'] = instance.city
-            initial['birth_date'] = instance.birth_date
-            initial['avatar'] = instance.avatar
-        kwargs['initial'] = initial
-        super(UserProfileForm, self).__init__(*args, **kwargs)
-
     def clean_full_name(self):
         full_name = self.cleaned_data['full_name']
 

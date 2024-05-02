@@ -36,7 +36,6 @@
 <!--                                ШАПКА                           -->
 
 
-
 <nav class="navbar navbar-expand-lg navbar-light bg-navbar">
     <div class="container-fluid">
         <a href="#" class="navbar-brand logo-name text-b-line"><b>НАЗВАНИЕ</b></a>
@@ -119,9 +118,9 @@
 
         <!-- Right -->
         <div class="">
-            <a href="" class="me-4 text-reset"><img src="static/image/index/footer/vk.svg" alt=""></a>
-            <a href="" class="me-4 text-reset"><img src="static/image/index/footer/telegram.svg" alt="telegram"></a>
-            <a href="" class="me-4 text-reset"><img src="static/image/index/footer/whatsapp.svg" alt="whatsapp"></a>
+            <a href="" class="me-4 text-reset"><img src="{% static 'image/index/footer/vk.svg' %}" alt="vk"></a>
+            <a href="" class="me-4 text-reset"><img src="{% static 'image/index/footer/telegram.svg' %}" alt="telegram"></a>
+            <a href="" class="me-4 text-reset"><img src="{% static 'image/index/footer/whatsapp.svg' %}" alt="whatsapp"></a>
         </div>
         <!-- Right -->
     </section>
@@ -208,32 +207,6 @@
 
 
 <script src="{% static 'js/bootstrap.js' %}"></script>
-<script>
-    // Получаем ссылки на элементы DOM
-    const menuButton = document.querySelector('.menu button');
-    const navMenu = document.querySelector('.menu nav');
-
-    // Скрываем меню при загрузке страницы
-    navMenu.style.display = 'none';
-
-    // Добавляем обработчик события клика на кнопку бургер-меню
-    menuButton.addEventListener('click', () => {
-        // Переключаем отображение меню
-        if (navMenu.style.display === 'none') {
-            navMenu.style.display = 'block';
-        } else {
-            navMenu.style.display = 'none';
-        }
-    });
-
-    // Добавляем обработчик события клика на ссылки в меню для закрытия меню
-    navMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            // Скрываем меню после клика на ссылку
-            navMenu.style.display = 'none';
-        });
-    });
-
-</script>
+<script src="{%  static 'js/burger_menu.js' %}"></script>
 </body>
 </html>

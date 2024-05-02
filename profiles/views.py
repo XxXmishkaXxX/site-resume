@@ -16,10 +16,11 @@ class ProfileCreateView(CreateView):
     model = UserProfile
     form_class = UserProfileForm
     template_name = 'create_profile.html'
-    success_url = reverse_lazy('feed')
 
     def form_valid(self, form):
+        print(form.cleaned_data)
         form.instance.user = self.request.user
+        print(form.data)
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -37,7 +38,7 @@ class ProfileView(View):
 
     def get(self, reqeust, pk):
         user = self.request.user
-        profile = UserProfile.objects.get()
+        profile = UserProfile.objects.get(pk=pk)
         context = {
             'user': user,
             'avatar': profile.avatar,
@@ -56,6 +57,7 @@ class ProfileEditView(UpdateView):
     model = UserProfile
     form_class = UserProfileForm
     template_name = 'edit_profile.html'
+    success_url = None
 
     def get_object(self, queryset=None):
 

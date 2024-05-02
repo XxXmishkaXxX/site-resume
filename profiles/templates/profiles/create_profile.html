@@ -43,7 +43,7 @@
 
 <div class="container mt-5">
     <h2>Create Profile</h2>
-    <form id="create_profile" method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-3">
             <label for="avatar" class="form-label">Avatar:</label>
@@ -54,8 +54,23 @@
         </div>
 
         <div id="nameFields">
-            <!-- Этот div будет заполнен полями JavaScript -->
+                <br>
+                <label for="lastName">Last name:</label>
+                <input id="lastName" type="text" name="last_name" maxlength="100"
+                       value=""
+                       class="form-control" oninput="updateFullName()">
+                <br>
+                <label for="firstName">First name:</label>
+                <input id="firstName" type="text" name="first_name" maxlength="100"
+                       value=""
+                       class="form-control" oninput="updateFullName()">
+                <br>
+                <label for="middleName">Middle name:</label>
+                <input id="middleName" type="text" name="middle_name" maxlength="100"
+                       value=""
+                       class="form-control" oninput="updateFullName()">
         </div>
+
         <div style="display:none;">
             <label for="full_name">Full Name:</label><br>
             <input id="full_name" type="text" name="full_name" maxlength="300" readonly>
@@ -87,7 +102,7 @@
         <div id="city_div" style="display:none;" class="mb-3">
             <label for="city" class="form-label">City:</label>
             <select id="city" name="city" class="form-select">
-                <option value="">Select City</option>
+                <option value="0">Select City</option>
             </select>
         </div>
 
@@ -113,7 +128,7 @@
         $('#birth_date').datepicker({
             uiLibrary: 'bootstrap5',
             locale: 'ru-ru',
-            format: 'dd/mm/yyyy',
+            format: 'mm/dd/yyyy',
             maxDate: new Date()
     });})
 </script>
