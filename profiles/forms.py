@@ -31,7 +31,7 @@ class UserProfileForm(forms.ModelForm):
         }
         widgets = {
             'bio': forms.Textarea(attrs={'rows': 3}),
-            'birth_date': forms.DateInput(format='%d/%m/%Y'),
+            'birth_date': forms.DateInput(format='%mm/%dd/%YYYY'),
         }
 
 

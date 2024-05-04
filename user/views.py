@@ -1,7 +1,7 @@
 import json
 
 from django.shortcuts import render, redirect, reverse
-from allauth.account.views import SignupView, LoginView, ConfirmEmailView
+from allauth.account.views import SignupView, LoginView, ConfirmEmailView, PasswordResetView
 from django.urls import reverse_lazy
 from django.contrib.auth import logout
 from django.views.generic import RedirectView
@@ -60,6 +60,10 @@ class CustomLogoutView(RedirectView):
 class CustomConfirmEmailView(ConfirmEmailView):
     def get_redirect_url(self):
         return reverse('verified_email')
+
+class CustomResetPasswordView(PasswordResetView):
+    template_name = 'reset_password.html'
+
 
 
 def verified_email_view(request):
