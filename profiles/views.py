@@ -1,5 +1,6 @@
 import json
 
+from allauth.account.forms import ChangePasswordForm
 from django.contrib.auth.decorators import login_required
 from django.forms import model_to_dict
 from django.http import JsonResponse
@@ -55,8 +56,8 @@ class ProfileView(View):
 @method_decorator(login_required, name='dispatch')
 class ProfileEditView(UpdateView):
     model = UserProfile
-    form_class = UserProfileForm
     template_name = 'edit_profile.html'
+    form_class = UserProfileForm
     success_url = None
 
     def get_object(self, queryset=None):
