@@ -1,0 +1,219 @@
+/* Custom styles for this page */
+.avatar-preview {
+    max-width: 200px;
+}
+
+#nameFields {
+    margin-bottom: 1rem;
+}
+
+.alert {
+    position: fixed; /* Фиксированное положение */
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    z-index: 9999;
+}
+
+/* БУТЕР В ШАПКЕ */
+.menu {
+    position: relative;
+    z-index: 2;
+
+}
+
+.menu nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    background-color: white; /* Добавляем фон для более явного отображения */
+
+}
+
+.menu nav.show {
+    display: block;
+
+}
+.btn-profile{
+   border:none;
+   position: relative;
+   top: 0.5rem;
+   background-color: white;
+   object-fit: none;
+}
+.btn-profile:hover{
+   border:none;
+   position: relative;
+   top: 0.5rem;
+   background-color: gray;
+   object-fit: none;
+}
+
+.abtn {
+  position: relative;
+  color: black;
+  text-decoration: none;
+
+}
+
+.abtn:hover {
+  color: black;
+}
+
+.abtn:hover:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px; /* регулируйте это значение, чтобы изменить расстояние между текстом и подчеркиванием */
+  height: 1px;
+  width: 43%;
+  background: black;
+}
+
+/* сама форма */
+.edit-all-input {
+  border-radius: 20px;
+  width: 35rem;
+  height: 40px;
+  border: 2px solid #56A9ED;
+  border-color: #56A9ED;
+
+}
+.edit-all-input:focus {
+  border: 2px solid #56A9ED;
+  border-color: #56A9ED;
+  box-shadow: none; /* Убрать тень обводки при фокусе */
+  border-color: initial; /* Убрать цвет обводки при фокусе */
+}
+.edit-all-input:hover {
+  border: 2px solid #56A9ED;
+  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Плавная обводка */
+}
+
+
+.ms-custom-edit {
+  margin-left: 11rem !important;
+}
+
+.forma_edit{
+  position: relative;
+  left: -30vh;
+}
+
+.img-avatar{
+  position: relative;
+  left: 15rem;
+  top:-168px;
+  z-index: -1;
+}
+
+.btn-sdvig-right{
+
+  }
+
+  .btn-sleva-profile{
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* адаптив устройства */
+@media only screen and (max-width: 1100px) {
+
+  .ms-custom-edit {
+    margin-left: 5rem !important;
+  }
+
+  .bio-adap{
+      width: 75%;
+  }
+
+
+}
+/* адаптив устройства */
+@media (max-width: 480px) {
+
+  .menu{
+    position: relative;
+    left:21.5rem;
+    top:-6vh;
+
+  }
+
+  .btn-profile{
+     width: 50px; height: 40px;
+  }
+
+  .container.pos-auth {
+    padding: 20px;
+  }
+  .mb-3 {
+    margin-bottom: 15px;
+  }
+  .reg-all-input {
+    width: 100%;
+  }
+
+  .profile-all {
+    border-radius: 20px;
+    width: 120px;
+    height: 60px;
+    border: 2px solid #56A9ED;
+    border-color: #56A9ED;
+
+  }
+  .profile-all:focus {
+    border: 2px solid #56A9ED;
+    border-color: #56A9ED;
+    box-shadow: none; /* Убрать тень обводки при фокусе */
+    border-color: initial; /* Убрать цвет обводки при фокусе */
+  }
+  .profile-all:hover {
+    border: 2px solid #56A9ED;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Плавная обводка */
+  }
+
+  .btn {
+    width: 100%;
+  }
+  .logo-name-auth{
+    font-size:40px;
+    position: relative;
+    left: 11vh;
+    top:5vh;
+  }
+  /* позиция формы */
+  .pos-auth{
+    position: relative;
+    left: 0vh;
+    top: 15vh;
+  }
+
+  .ms-custom-edit {
+    margin-left: -0.6rem !important;
+  }
+
+  .mt-5 {
+    margin-top: 1rem !important;
+  }
+
+  .bio-adap{
+      width: 50%;
+  }
+
+}

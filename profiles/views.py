@@ -1,20 +1,17 @@
 import json
 from allauth.account.forms import ChangePasswordForm
+from django.views.generic import CreateView, UpdateView, DetailView, TemplateView
+from wall.models import Post
 from django.contrib.auth.decorators import login_required
+
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView, UpdateView, DetailView, TemplateView
+from django.views import View
+from django.views.generic import CreateView, UpdateView
 from django.urls import reverse_lazy, reverse
-from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
-from wall.models import Post
 from .models import UserProfile
 from .forms import UserProfileForm
-from .serializers import UserProfileSerializer
 
 
 class ProfileCreateView(CreateView):

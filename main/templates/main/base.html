@@ -6,39 +6,19 @@
 <head>
     <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/style/style-base.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/style/style-profile.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/bootstrap-icons/font/bootstrap-icons.min.css' %}"/>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0"/>
     <title>Title</title>
-    <style>
-        .menu {
-            position: relative;
-            z-index: 2;
-        }
-
-        .menu nav {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            display: none;
-            background-color: white; /* Добавляем фон для более явного отображения */
-            border: 1px solid black; /* Добавляем рамку для более явного отображения */
-        }
-
-        .menu nav.show {
-            display: block;
-        }
-
-    </style>
 </head>
 <body>
 
 <!--                                ШАПКА                           -->
 
-
 <nav class="navbar navbar-expand-lg navbar-light bg-navbar">
     <div class="container-fluid">
-        <a href="#" class="navbar-brand logo-name text-b-line"><b>НАЗВАНИЕ</b></a>
+        <a href="http://127.0.0.1:8000/" class="navbar-brand logo-name text-b-line"><b>TellYou</b></a>
         <button type="button" class="navbar-toggler logo-button" data-bs-toggle="collapse"
                 data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -52,30 +32,27 @@
                 {% if user.userprofile %}
                     <!-- Показать аватар и имя пользователя -->
                     <div>
-                        <img src="{{ user.userprofile.avatar.url }}" alt="Avatar" style="max-width: 50px">
+                        <img src="{{ user.userprofile.avatar.url }}" class="me-2" alt="Avatar"
+                         style="width: 50px; height: 50px; border-radius:50px; object-fit: cover;">
                         {{ user.userprofile.full_name | remove_middle_name }}
                     </div>
-                    <div class="menu">
-                        <button>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                 class="bi bi-list" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                      d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-                            </svg>
+                    <div class="menu ms-2">
+                        <button class="btn btn-profile">
+                            <i class="bi bi-list" style="width=20; height=20px;"></i>
                         </button>
-                        <nav class="menu">
-                            <ul>
+                        <nav class="menu mt-3 shadow p-3 mb-5 bg-white rounded">
+                            <ul class="list-unstyled mt-3" style="list-style-type: none;">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'profile_user' user.pk %}">Профиль</a>
+                                    <a class="nav-link px-4" href="{% url 'profile_user' user.pk %}">Профиль</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'edit_profile' user.pk %}">Редактирование профиля</a>
+                                    <a class="nav-link px-4" href="{% url 'edit_profile' user.pk %}">Редактирование профиля</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Поддержка</a>
+                                    <a class="nav-link px-4" href="#">Поддержка</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'logout' %}">Выйти</a>
+                                    <a class="nav-link px-4" href="{% url 'logout' %}">Выйти</a>
                                 </li>
                             </ul>
                         </nav>
@@ -135,7 +112,7 @@
                 <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                     <!-- Content -->
                     <h6 class="text-uppercase fw-bold mb-4">
-                        </i>НАЗВАНИИЕ
+                        НАЗВАНИИЕ
                     </h6>
                     <p>
                         Проект разработан при поддержке Уральского федерального университета имени Первого Президента
@@ -203,6 +180,7 @@
     <!-- Section: Links  -->
 
 </footer>
+
 <!-- Footer -->
 
 

@@ -93,7 +93,7 @@ TEMPLATES = [
             BASE_DIR / 'main/templates/main',
             BASE_DIR / 'user/templates/user',
             BASE_DIR / 'profiles/templates/profiles',
-            # BASE_DIR / 'feed/templates/feed'
+
         ],
         'APP_DIRS': True,
         'OPTIONS': {

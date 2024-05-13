@@ -906,6 +906,7 @@ progress {
   width: 100%;
 }
 
+
 .offset-1 {
   margin-left: 8.33333333%;
 }
@@ -8022,6 +8023,10 @@ textarea.form-control-lg {
   margin-top: 3rem !important;
 }
 
+.mt-6 {
+  margin-top: 8rem !important;
+}
+
 .mt-auto {
   margin-top: auto !important;
 }
@@ -8052,6 +8057,11 @@ textarea.form-control-lg {
 .me-6 {
   margin-right: 5rem !important;
 }
+
+.me-7-custom {
+  margin-right: 15rem !important;
+}
+
 .me-auto {
   margin-right: auto !important;
 }
@@ -8111,6 +8121,8 @@ textarea.form-control-lg {
 .ms-6 {
   margin-left: 5rem !important;
 }
+
+
 
 .ms-auto {
   margin-left: auto !important;

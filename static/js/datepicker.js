@@ -3,6 +3,7 @@ $(document).ready(function () {
             uiLibrary: 'bootstrap5',
             locale: 'ru-ru',
             format: 'mm/dd/yyyy',
+
             maxDate: new Date()
         });
     })
