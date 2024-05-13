@@ -8,7 +8,8 @@ urlpatterns = [
     path('', include('main.urls')),
     path('profile/', include('profiles.urls')),
     path('accounts/', include('user.urls')),
-    path('api/', include('api.urls'))
+    path('api/', include('api.urls')),
+    path('wall/', include('wall.urls'))
 ]
 
 handler404 = "main.views.page_not_found_view"

@@ -4,12 +4,17 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
-from django.views import View
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DetailView, TemplateView
 from django.urls import reverse_lazy, reverse
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
+from wall.models import Post
 from .models import UserProfile
 from .forms import UserProfileForm
+from .serializers import UserProfileSerializer
 
 
 class ProfileCreateView(CreateView):
@@ -34,22 +39,17 @@ class ProfileCreateView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class ProfileView(View):
+class ProfileView(DetailView):
+    model = UserProfile
+    template_name = 'profile.html'
+    context_object_name = 'profile'
 
-    def get(self, reqeust, pk):
-        user = self.request.user
-        profile = UserProfile.objects.get(pk=pk)
-        context = {
-            'user': user,
-            'avatar': profile.avatar,
-            'full_name': profile.full_name,
-            'bio': profile.bio,
-            'country': profile.country.name,
-            'city': profile.city.name,
-            'birth_date': profile.birth_date,
-            'profile_pk': profile.pk,
-        }
-        return render(reqeust, 'profile.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile = self.get_object()
+        posts = Post.objects.filter(author=profile).order_by('-created_at')
+        context['posts'] = posts
+        return context
 
 
 @method_decorator(login_required, name='dispatch')
