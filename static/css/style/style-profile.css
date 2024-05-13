@@ -104,12 +104,20 @@
 }
 
 .img-avatar{
-  position: relative;
-  left: 15rem;
-  top:-168px;
+  position: absolute;
+  left: 46rem;
+  top:-145px;
   z-index: -1;
+  right: 0;
 }
 
+.img-avatar-osnova{
+  position: absolute;
+  left: 46rem;
+  top:-145px;
+  z-index: -1;
+  right: 0;
+}
 .btn-sdvig-right{
 
   }
@@ -118,9 +126,14 @@
 
   }
 
+  .bio-adap{
+      width: 60%;
+  }
 
-
-
+.svdig-forms{
+  position: relative;
+  top: -1.75rem;
+}
 
 
 
@@ -140,7 +153,7 @@
   }
 
   .bio-adap{
-      width: 75%;
+      width: 40%;
   }
 
 
@@ -169,24 +182,7 @@
     width: 100%;
   }
 
-  .profile-all {
-    border-radius: 20px;
-    width: 120px;
-    height: 60px;
-    border: 2px solid #56A9ED;
-    border-color: #56A9ED;
 
-  }
-  .profile-all:focus {
-    border: 2px solid #56A9ED;
-    border-color: #56A9ED;
-    box-shadow: none; /* Убрать тень обводки при фокусе */
-    border-color: initial; /* Убрать цвет обводки при фокусе */
-  }
-  .profile-all:hover {
-    border: 2px solid #56A9ED;
-    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Плавная обводка */
-  }
 
   .btn {
     width: 100%;

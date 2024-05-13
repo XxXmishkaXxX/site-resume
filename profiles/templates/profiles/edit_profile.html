@@ -22,11 +22,11 @@
       <div class="row ms-custom-edit">
         <div class="col-md-3">
             <div class="d-grid gap-2 mt-5" style="max-width: 200px;">
-              <button type="button" onclick="showSection('basic_info')" class="profile-all">Основное</button>
-              <button type="button"onclick="showSection('avatar')" class="profile-all">Аватар</button>
-              <button type="button"onclick="showSection('about_me')" class="profile-all">О себе</button>
-              <button type="button"onclick="showSection('change_email')" class="profile-all">Изменить почту</button>
-              <button type="button" onclick="showSection('change_password')" class="profile-all">Изменить пароль</button>
+              <button onclick="showSection('basic_info')" class="btn btn-outline-primary">Основное</button>
+              <button onclick="showSection('avatar')" class="btn btn-outline-primary">Аватар</button>
+              <button onclick="showSection('about_me')" class="btn btn-outline-primary">О себе</button>
+              <button onclick="showSection('change_email')" class="btn btn-outline-primary">Изменить почту</button>
+              <button onclick="showSection('change_password')" class="btn btn-outline-primary">Изменить пароль</button>
 
               <a class="mt-2 abtn" style="" href="http://127.0.0.1:8000/">На главную</a>
             </div>
@@ -36,9 +36,9 @@
 
 
 
-      <div class="col-md-8 mt-5 "><br><br>
+      <div class="col-md-8 "><br><br>
         <!-- форма -->
-        <div class="me-6">
+        <div class="svdig-forms">
         <form method="post" enctype="multipart/form-data" class="">
             {% csrf_token %}
             <div id="basic_info_section" style="display: none;">
@@ -93,11 +93,17 @@
                 </div>
 
 
-                <div class="mb-3" style="width: 31.5rem;">
+                <div class="mb-3" style="width: 35rem;">
                     <label for="birth_date" class="form-label ">Дата рождения:</label>
                     <input id="birth_date" type="text" name="birth_date"
                           value="{{ form.instance.birth_date }}" class="edit-all-input form-control ">
+
+                          <div class="d-none d-md-block col-md-6 align-self-center img-avatar-osnova">
+                            <img src="{% static 'image/profile/lev.png' %}" alt="Изображение" class="img-fluid">
+                          </div>
                 </div>
+
+
             </div>
             <br>
             <div id="avatar_section" style="display: none;">
@@ -105,26 +111,30 @@
                 <div class="mb-3 col-6">
                   <label for="avatar" class="form-label">Avatar:</label>
                   <br>
-                  <img id="avatarPreview" src="{{ form.instance.avatar.url }}" alt="Avatar Preview" class="avatar-preview img-thumbnail" style="max-width: 25rem;">
+                  <img id="avatarPreview" src="{{ form.instance.avatar.url }}" alt="Avatar Preview" class="avatar-preview img-thumbnail" style="max-width: 34.2rem;">
                   <br><br>
-                  <input id="avatar" type="file" name="avatar" class="px-3 form-control" onchange="previewAvatar()">
+                  <input id="avatar" type="file" name="avatar" class="form-control" onchange="previewAvatar()">
                 </div>
 
-                <div class="d-none d-md-block col-md-6 align-self-center">
-                  <img src="{% static 'image/profile/lis.png' %}" alt="Изображение" class="img-fluid img-avatar">
+                <div class="d-none d-md-block col-md-6 align-self-center img-avatar">
+                  <img src="{% static 'image/profile/lis.png' %}" alt="Изображение" class="img-fluid">
                 </div>
               </div>
 
-
+              <br><br><br><br><br><br><br><br>
             </div>
             <div id="about_me_section" style="display: none;">
-                <div class="mb-3">
+                <div class="mb-1">
                     <label for="bio" class="form-label">Bio:</label>
                     <textarea id="bio" name="bio" rows="6" class="form-control bio-adap"></textarea>
                 </div>
+                <div class="d-none d-md-block col-md-6 align-self-center img-avatar-osnova">
+                  <img src="{% static 'image/profile/ma.png' %}" alt="Изображение" class="img-fluid">
+                </div>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             </div>
 
-              <div class="btn-sdvig-right d-flex justify-content-end mt-3" >
+              <div class="btn-sdvig-right d-flex justify-content-center mt-3" >
                   <a href="" class="btn btn-light mx-3">Отмена</a>
                   <button type="submit" class="btn btn-primary">Сохранить</button>
               </div>
