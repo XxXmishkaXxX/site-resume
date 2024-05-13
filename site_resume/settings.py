@@ -7,6 +7,7 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -15,8 +16,7 @@ SECRET_KEY = os.getenv('DJANGO-KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 
@@ -28,12 +28,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'phonenumber_field',
-    'main.apps.MainConfig',
-    'user.apps.UserConfig',
-    'profiles.apps.ProfilesConfig',
+    'cities_light',
+    'main',
+    'user',
+    'profiles',
+    'api',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -86,7 +89,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             BASE_DIR / 'main/templates/main',
-            BASE_DIR / 'user/templates/user'
+            BASE_DIR / 'user/templates/user',
+            BASE_DIR / 'profiles/templates/profiles'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -160,3 +164,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CITIES_LIGHT_TRANSLATION_LANGUAGES = ['ru', 'kz', 'en']
+CITIES_LIGHT_INCLUDE_COUNTRIES = ['RU', 'KZ', 'US']

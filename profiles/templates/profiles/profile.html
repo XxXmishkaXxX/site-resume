@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+</head>
+<body>
+    <h1>User Profile</h1>
+    <div>
+        <h2>Avatar</h2>
+        <img src="{{ avatar.url }}" alt="Avatar" style="max-width: 200px; max-height: 200px;">
+    </div>
+    <div>
+        <h2>Full Name</h2>
+        <p>{{ full_name }}</p>
+    </div>
+    <div>
+        <h2>Bio</h2>
+        <p>{{ bio }}</p>
+    </div>
+    <div>
+        <h2>Country</h2>
+        <p>{{ country }}</p>
+    </div>
+    <div>
+        <h2>City</h2>
+        <p>{{ city }}</p>
+    </div>
+    <div>
+        <h2>Birth Date</h2>
+        <p>{{ birth_date }}</p>
+    </div>
+
+</body>
+</html>

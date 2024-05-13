@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load main_tags %}
+{% block content %}
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.css' %}"/>
+    <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
+    <script src="https://unpkg.com/gijgo@1.9.14/js/messages/messages.ru-ru.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="{% static 'css/style/style-profile.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/style/style-base.css' %}"/>
+
+
+<!--                                    тело                  -->
+
+
+
+    <div class="container-fluid mt-5 ">
+      <div class="row ms-custom-edit">
+        <div class="col-md-3">
+            <div class="d-grid gap-2 mt-5" style="max-width: 200px;">
+              <button type="button" onclick="showSection('basic_info')" class="profile-all">Основное</button>
+              <button type="button"onclick="showSection('avatar')" class="profile-all">Аватар</button>
+              <button type="button"onclick="showSection('about_me')" class="profile-all">О себе</button>
+              <button type="button"onclick="showSection('change_email')" class="profile-all">Изменить почту</button>
+              <button type="button" onclick="showSection('change_password')" class="profile-all">Изменить пароль</button>
+
+              <a class="mt-2 abtn" style="" href="http://127.0.0.1:8000/">На главную</a>
+            </div>
+          </div>
+
+          <!-- фото -->
+
+
+
+      <div class="col-md-8 mt-5 "><br><br>
+        <!-- форма -->
+        <div class="me-6">
+        <form method="post" enctype="multipart/form-data" class="">
+            {% csrf_token %}
+            <div id="basic_info_section" style="display: none;">
+                <div id="nameFields">
+                    <br>
+                    <label for="lastName">Настоящее Имя:</label>
+                    <input id="lastName" type="text" name="last_name" maxlength="100"
+                           value="{{ form.instance.full_name | get_name2 }}"
+                           class="form-control edit-all-input mt-2" oninput="updateFullName()">
+
+                    <br>
+
+                    <label for="firstName">Настоящая Фамилия:</label>
+                    <input id="firstName" type="text" name="first_name" maxlength="100"
+                           value="{{ form.instance.full_name | get_name }}"
+                           class="form-control edit-all-input mt-2" oninput="updateFullName()">
+                    <br>
+
+                    <label for="middleName">Настоящее Отчество:</label>
+                    <input id="middleName" type="text" name="middle_name" maxlength="100"
+                           value="{{ form.instance.full_name | get_middle_name }}"
+                           class="form-control edit-all-input mt-2" oninput="updateFullName()">
+                </div>
+                <div style="display:none;">
+                    <label for="full_name">Полное имя:</label><br>
+                    <input id="full_name" type="text" name="full_name" maxlength="300"
+                           class="edit-all-input mt-2" value="{{ form.instance.full_name }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="sex" class="form-label">Пол:</label>
+                    <select id="sex" name="sex" class="form-select edit-all-input">
+                        <option value="M" {% if form.instance.sex == 'M' %} selected {% endif %}>Male</option>
+                        <option value="F" {% if form.instance.sex == 'F' %} selected {% endif %}>Female</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="country" class="form-label">Страна:</label>
+                    <select id="country" name="country" class="form-select edit-all-input">
+                        {% for country in form.country.field.queryset %}
+                            <option value="{{ country.id }}" {% if country.id == form.instance.country.id %}
+                                    selected {% endif %}>{{ country.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div id="city_div" style="display:none;" class="mb-3">
+                    <label for="city" class="form-label edit-all-input">Город:</label>
+                    <select id="city" name="city" class="form-select">
+                        <option value="0">Select City</option>
+                    </select>
+                </div>
+
+
+                <div class="mb-3" style="width: 31.5rem;">
+                    <label for="birth_date" class="form-label ">Дата рождения:</label>
+                    <input id="birth_date" type="text" name="birth_date"
+                          value="{{ form.instance.birth_date }}" class="edit-all-input form-control ">
+                </div>
+            </div>
+            <br>
+            <div id="avatar_section" style="display: none;">
+              <div class="row">
+                <div class="mb-3 col-6">
+                  <label for="avatar" class="form-label">Avatar:</label>
+                  <br>
+                  <img id="avatarPreview" src="{{ form.instance.avatar.url }}" alt="Avatar Preview" class="avatar-preview img-thumbnail" style="max-width: 25rem;">
+                  <br><br>
+                  <input id="avatar" type="file" name="avatar" class="px-3 form-control" onchange="previewAvatar()">
+                </div>
+
+                <div class="d-none d-md-block col-md-6 align-self-center">
+                  <img src="{% static 'image/profile/lis.png' %}" alt="Изображение" class="img-fluid img-avatar">
+                </div>
+              </div>
+
+
+            </div>
+            <div id="about_me_section" style="display: none;">
+                <div class="mb-3">
+                    <label for="bio" class="form-label">Bio:</label>
+                    <textarea id="bio" name="bio" rows="6" class="form-control bio-adap"></textarea>
+                </div>
+            </div>
+
+              <div class="btn-sdvig-right d-flex justify-content-end mt-3" >
+                  <a href="" class="btn btn-light mx-3">Отмена</a>
+                  <button type="submit" class="btn btn-primary">Сохранить</button>
+              </div>
+        </form>
+      </div>
+    </div>
+
+        <div id="change_email_section" style="display: none;">
+                <!-- Change Password Fields -->
+                <!-- Add your change password fields here -->
+            </div>
+        <div id="change_password_section" style="display: none;">
+                <!-- Change Password Fields -->
+                <!-- Add your change password fields here -->
+            </div>
+        </div>
+
+    </div>
+
+<br><br><br><br>
+
+
+
+
+
+
+
+
+<!-- скрипт бутера меню -->
+    <script>
+        var currentSection = null;
+
+        function showSection(sectionName) {
+            if (currentSection !== null) {
+                currentSection.style.display = 'none';
+            }
+
+            var newSection = document.getElementById(sectionName + '_section');
+
+            newSection.style.display = 'block';
+            currentSection = newSection;
+        }
+    </script>
+
+    <script src="{% static 'js/get_cities_country.js' %}"></script>
+    <script src="{% static 'js/make_full_name.js' %}"></script>
+    <script src="{% static 'js/preview_avatar.js' %}"></script>
+    <!--<script src="{% static 'js/form_validation.js' %}"></script>-->
+    <script src="{% static 'js/datepicker.js' %}"></script>
+{% endblock %}
