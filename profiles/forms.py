@@ -1,6 +1,5 @@
 from django import forms
 from django.core.exceptions import ValidationError
-
 from .models import UserProfile
 
 
@@ -31,9 +30,8 @@ class UserProfileForm(forms.ModelForm):
         }
         widgets = {
             'bio': forms.Textarea(attrs={'rows': 3}),
-            'birth_date': forms.DateInput(format='%mm/%dd/%YYYY'),
+            'birth_date': forms.DateInput(format='%d/%m/%Y'),
+
         }
 
 
-class EditUserProfileForm():
-    pass
