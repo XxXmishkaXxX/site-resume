@@ -25,7 +25,6 @@
               <button onclick="showSection('basic_info')" class="btn btn-outline-primary">Основное</button>
               <button onclick="showSection('avatar')" class="btn btn-outline-primary">Аватар</button>
               <button onclick="showSection('about_me')" class="btn btn-outline-primary">О себе</button>
-              <button onclick="showSection('change_email')" class="btn btn-outline-primary">Изменить почту</button>
               <button onclick="showSection('change_password')" class="btn btn-outline-primary">Изменить пароль</button>
 
               <a class="mt-2 abtn" style="" href="http://127.0.0.1:8000/">На главную</a>
@@ -93,13 +92,13 @@
                 </div>
 
 
-                <div class="mb-3" style="width: 35rem;">
+                <div class="mb-3 birth_date-size" >
                     <label for="birth_date" class="form-label ">Дата рождения:</label>
                     <input id="birth_date" type="text" name="birth_date"
                           value="{{ form.instance.birth_date }}" class="edit-all-input form-control ">
 
                           <div class="d-none d-md-block col-md-6 align-self-center img-avatar-osnova">
-                            <img src="{% static 'image/profile/lev.png' %}" alt="Изображение" class="img-fluid">
+                            <img src="{% static 'image/profile/lev.jpg' %}" alt="Изображение" class="img-fluid">
                           </div>
                 </div>
 
@@ -108,28 +107,67 @@
             <br>
             <div id="avatar_section" style="display: none;">
               <div class="row">
-                <div class="mb-3 col-6">
+                <div class="mb-3 col-6-avatar">
                   <label for="avatar" class="form-label">Avatar:</label>
                   <br>
-                  <img id="avatarPreview" src="{{ form.instance.avatar.url }}" alt="Avatar Preview" class="avatar-preview img-thumbnail" style="max-width: 34.2rem;">
+                  <img id="avatarPreview" src="{{ form.instance.avatar.url }}" alt="Avatar Preview" class="avatar-preview img-thumbnail avatar-size" >
                   <br><br>
-                  <input id="avatar" type="file" name="avatar" class="form-control" onchange="previewAvatar()">
+                  <input id="avatar" type="file" name="avatar" class="form-control " onchange="previewAvatar()">
                 </div>
 
-                <div class="d-none d-md-block col-md-6 align-self-center img-avatar">
-                  <img src="{% static 'image/profile/lis.png' %}" alt="Изображение" class="img-fluid">
+                <div class="d-none d-md-block col-md-6 align-self-center img-avatar" >
+                  <img src="{% static 'image/profile/lis.jpg' %}" alt="Изображение" class="img-fluid" >
                 </div>
               </div>
 
-              <br><br><br><br><br><br><br><br>
+              <br><br><br><br><br><br><br>
             </div>
+
+            <div id="change_password_section" style="display: none;">
+              <form name="changePasswordForm" method="post" enctype="multipart/form-data">
+                              {% csrf_token %}
+                  <!-- Форма смены пароля -->
+                    <div class="mb-3">
+                      <label for="id_oldpassword" class="form-label">Текущий пароль:</label>
+                      <input type="password" class="form-control edit-all-input" name="oldpassword" placeholder="Текущий пароль" autocomplete="current-password" required="" id="id_oldpassword">
+                  </div>
+                   <div class="mb-3">
+                      <label for="id_password1" class="form-label">Новый пароль:</label>
+                      <input type="password" class="form-control edit-all-input" name="password1" placeholder="Новый пароль" autocomplete="new-password" required="" aria-describedby="id_password1_helptext" id="id_password1">
+                      <span class="helptext" id="id_password1_helptext"></span>
+                    </div>
+
+                        <ul>
+                          <li style="width: 50%;">Ваш пароль не должен быть слишком похож на другие ваши персональные данные.</li>
+                          <li>Ваш пароль должен содержать не менее 8 символов.</li>
+                          <li>Ваш пароль не может быть обычным паролем.</li>
+                          <li>Ваш пароль не может быть полностью цифровым.</li>
+                        </ul>
+
+              <div class="mb-3">
+                <label for="id_password2" class="form-label">Новый пароль(повторить):</label>
+                <input type="password" class="form-control edit-all-input" name="password2" placeholder="Новый пароль(повторить)" required="" id="id_password2">
+              </div>
+                        <button name="change_password_button" type="submit" class="btn btn-success">Изменить текущий пароль</button>
+
+
+
+
+                        <div class="d-none d-md-block col-md-6 align-self-center img-avatar">
+                          <img src="{% static 'image/profile/margo.jpg' %}" alt="Изображение" class="img-fluid">
+                        </div>
+                        <br><br><br><br><br><br><br>
+                </form>
+            </div>
+
+
             <div id="about_me_section" style="display: none;">
-                <div class="mb-1">
+                <div class="mb-1 mx-auto">
                     <label for="bio" class="form-label">Bio:</label>
                     <textarea id="bio" name="bio" rows="6" class="form-control bio-adap"></textarea>
                 </div>
                 <div class="d-none d-md-block col-md-6 align-self-center img-avatar-osnova">
-                  <img src="{% static 'image/profile/ma.png' %}" alt="Изображение" class="img-fluid">
+                  <img src="{% static 'image/profile/ma.jpg' %}" alt="Изображение" class="img-fluid">
                 </div>
                 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
             </div>
@@ -140,19 +178,13 @@
               </div>
         </form>
       </div>
-    </div>
 
-        <div id="change_email_section" style="display: none;">
-                <!-- Change Password Fields -->
-                <!-- Add your change password fields here -->
-            </div>
-        <div id="change_password_section" style="display: none;">
-                <!-- Change Password Fields -->
-                <!-- Add your change password fields here -->
-            </div>
-        </div>
 
     </div>
+
+  </div>
+
+</div>
 
 <br><br><br><br>
 

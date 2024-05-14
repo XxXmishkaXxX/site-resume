@@ -24,3 +24,5 @@ class CustomSignupForm(SignupForm):
         user = super(CustomSignupForm, self).save(request)
         user.save()
         return user
+
+

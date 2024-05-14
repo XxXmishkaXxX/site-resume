@@ -29,10 +29,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'phonenumber_field',
     'cities_light',
-    'main',
-    'user',
-    'profiles',
-    'api',
+    'main.apps.MainConfig',
+    'user.apps.UserConfig',
+    'profiles.apps.ProfilesConfig',
+    'wall.apps.WallConfig',
+    'api.apps.ApiConfig',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -63,6 +64,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_CHANGE_EMAIL = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -90,7 +92,8 @@ TEMPLATES = [
         'DIRS': [
             BASE_DIR / 'main/templates/main',
             BASE_DIR / 'user/templates/user',
-            BASE_DIR / 'profiles/templates/profiles'
+            BASE_DIR / 'profiles/templates/profiles',
+
         ],
         'APP_DIRS': True,
         'OPTIONS': {

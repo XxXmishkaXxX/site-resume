@@ -52,3 +52,4 @@ if (window.innerWidth < 932) {
     // Вызываем проверку при изменении размеров окна
     window.addEventListener('resize', checkMenuPosition);
 }
+

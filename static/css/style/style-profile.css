@@ -78,18 +78,18 @@
   border-radius: 20px;
   width: 35rem;
   height: 40px;
-  border: 2px solid #56A9ED;
-  border-color: #56A9ED;
+  border: 2px solid #000;
+  border-color: #000;
 
 }
 .edit-all-input:focus {
-  border: 2px solid #56A9ED;
-  border-color: #56A9ED;
+  border: 2px solid #000;
+  border-color: #000;
   box-shadow: none; /* Убрать тень обводки при фокусе */
   border-color: initial; /* Убрать цвет обводки при фокусе */
 }
 .edit-all-input:hover {
-  border: 2px solid #56A9ED;
+  border: 2px solid #fff;
   box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Плавная обводка */
 }
 
@@ -118,13 +118,10 @@
   z-index: -1;
   right: 0;
 }
-.btn-sdvig-right{
 
-  }
-
-  .btn-sleva-profile{
-
-  }
+.birth_date-size{
+  width: 35rem;
+}
 
   .bio-adap{
       width: 60%;
@@ -136,7 +133,9 @@
 }
 
 
-
+.avatar-size{
+  max-width: 34.2rem;
+}
 
 
 
@@ -156,6 +155,14 @@
       width: 40%;
   }
 
+  .edit-all-input {
+    border-radius: 20px;
+    width: 30rem;
+    height: 40px;
+    border: 2px solid #000;
+    border-color: #000;
+
+  }
 
 }
 /* адаптив устройства */
@@ -209,7 +216,29 @@
   }
 
   .bio-adap{
-      width: 50%;
+      width: 99%;
+  }
+
+  .edit-all-input {
+    border-radius: 20px;
+    width: 22rem;
+    height: 40px;
+    border: 2px solid #000;
+    border-color: #000;
+
+  }
+
+  .birth_date-size{
+    width: 22rem;
+  }
+
+  .avatar-size{
+    max-width: 25rem;
+  }
+
+  .col-6-avatar {
+    flex: 0 0 auto;
+    width: 100%;
   }
 
 }
