@@ -56,7 +56,6 @@
                         </div>
                     </div>
                     {% if profile.pk == user.pk %}
-
                         <div class="profile-container d-flex align-items-center ">
                             <div class="main_info me-auto">
                                 <!-- main_info content here -->
@@ -69,42 +68,40 @@
                                 <button id="openModalFormCreatePostBtn" class="btn btn-success">Загрузить работу
                                 </button>
                             </div>
-
                         </div>
-
-
                         </div>
-                        <img src="/static/image/profile/1.svg" alt="alasldkmasldkmasldkaslkdmaslkmd"
-                             class="img-center-profile mb-3">
-
+                        {% if not posts %}
+                            <img src="{% static 'image/profile/backgroind.png' %}" alt="alasldkmasldkmasldkaslkdmaslkmd"
+                                 class="img-center-profile mb-3" style="max-width: 1000px">
+                        {% endif %}
                         <br>
                         <div id="modalCreatePost" class="modal">
-                            <div class="modal-content">
-                                <span class="close">&times;</span>
-                                <form id="createForm">
-                                    {% csrf_token %}
-                                    <textarea id="postContent" placeholder="Введите текст поста" rows="3"
-                                              style="height: 20rem; width: 90.5rem;"></textarea><br>
-                                    <input type="file" id="postImages" multiple>
-                                    <br>
-                                    <div class="form-group">
-                                        {#                    <input type="file" id="postVideos" multiple>#}
-                                    </div>
-                                    <button type="submit" onclick="createPost()" id="createPostBtn"
-                                            class="btn btn-primary">Отправить
-                                    </button>
-                                </form>
-                            </div>
+                        <div class="modal-content">
+                            <span class="close">&times;</span>
+                            <form id="createForm">
+                                {% csrf_token %}
+                                <textarea id="postContent" placeholder="Введите текст поста" rows="3"
+                                          style="height: 20rem; width: 90.5rem;"></textarea><br>
+                                <input type="file" id="postImages" multiple>
+                                <br>
+                                <div class="form-group">
+                                    {#                                                            <input type="file" id="postVideos" multiple>#}
+                                </div>
+                                <button type="submit" onclick="createPost()" id="createPostBtn"
+                                        class="btn btn-primary">Отправить
+                                </button>
+                            </form>
                         </div>
                     {% endif %}
+                    </div>
 
                 <br>
-                <div>
+                <div class="">
                     <div class="container" id="postContainer">
                         {% for post in posts %}
                             <div class="card" id="post-{{ post.id }}">
                                 <p class="date "><br>&nbsp;&nbsp;&nbsp;&nbsp;Дата публикации: {{ post.created_at }}</p>
-                                <p class="card-text"><br>&nbsp;&nbsp;&nbsp;&nbsp;Ваше сообщение: {{ post.content }}</p>
+                                <p class="card-text"><br>&nbsp;&nbsp;&nbsp;&nbsp;{{ post.content }}</p>
                                 <div class="container_images">
                                     <div class="row">
                                         {% if post.images %}
@@ -114,7 +111,7 @@
                                                     <div class="thumbnail">
                                                         <div class="img-container ms-3">
                                                             <img src="{{ image.image.url }}" alt="Post Image"
-                                                                 style="max-width: 200px; border-radius: 20px;">
+                                                                 style="max-width: 1000px; border-radius: 20px;">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -133,10 +130,14 @@
 
 
                                 <div class="d-flex align-items-center">
-                                    <div class="like ms-3">
+                                    <div class="like ms-3" id="like">
+                                        {% csrf_token %}
                                         <button onclick="likePost({{ post.id }})"
                                                 class="btn btn-outline-danger me-2 mt-4">
-                                            <b><i id="heart-svg" class="bi bi-heart"> </i></b>{{ post.likes_count }}
+                                            <b><i id="heart-svg-{{ post.id }}"
+                                                  class="bi {% if post|is_liked_by:request.user %}
+                                            bi-heart-fill{% else %}bi-heart{% endif %}"> </i></b><b
+                                                id="likes-count-{{ post.id }}">{{ post.likes_count }}</b>
                                         </button>
                                     </div>
 
@@ -150,51 +151,50 @@
                                                     onclick="deletePost({{ post.id }})">Удалить
                                             </button>
                                         </form>
-                                        <div class="views   mt-4">
-                                            <i class="bi bi-eye"></i> <b>{{ post.views_count }} </b>
-                                        </div>
-                                        </div><br>
-
-
-                                        </div>
-                                        </div>
-
-
-
                                     {% endif %}
-
-                            <br>
-                            <!-- коменты -->
-                            <div class="comments">
-                                <h5>Комментарии</h5>
-                                <div id="comments_list_{{ post.id }}">
-                                    {% for comment in post.comment_for_post.all %}
-                                        <div class="comment d-flex align-items-center">
-                                            <div class="avatar me-2">
-                                                <img src="{{ comment.user_profile.avatar.url }}" alt="avatar-commenter"
-                                                     style="max-width: 50px">
-                                            </div>
-                                            <div class="comment-info">
-                                                <div class="full_name">
-                                                    <p>{{ comment.user_profile.full_name | remove_middle_name }}</p>
-                                                </div>
-                                                <div class="comment_text">{{ comment.text }}</div>
-                                                <div class="date-create-comment">{{ comment.created_at }}</div>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
+                                    <div class="views   mt-4">
+                                        <i class="bi bi-eye"></i> <b>{{ post.views_count }} </b>
+                                    </div>
                                 </div>
-                                <form id="addComment_{{ post.id }}">
-                                    {% csrf_token %}
-                                    <div class="form-group">
+                                <br>
+
+                                <br>
+                                <!-- коменты -->
+                                <div class="comments">
+                                    <h5>Комментарии</h5>
+                                    <div id="comments_list_{{ post.id }}">
+                                        {% for comment in post.comment_for_post.all %}
+                                            <div class="comment d-flex align-items-center">
+                                                <div class="avatar me-2">
+                                                    <img src="{{ comment.user_profile.avatar.url }}"
+                                                         alt="avatar-commenter"
+                                                         style="max-width: 50px">
+                                                </div>
+                                                <div class="comment-info">
+                                                    <div class="full_name">
+                                                        <p>{{ comment.user_profile.full_name | remove_middle_name }}</p>
+                                                    </div>
+                                                    <div class="comment_text">{{ comment.text }}</div>
+                                                    <div class="date-create-comment">{{ comment.created_at }}</div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <form id="addComment_{{ post.id }}">
+                                        {% csrf_token %}
+                                        <div class="form-group">
                                         <textarea id="commentText_{{ post.id }}" class="form-control"
                                                   rows="3"></textarea>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary"
-                                            onclick="addComment({{ post.id }}); return false;">Отправить
-                                    </button>
-                                </form>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"
+                                                onclick="addComment({{ post.id }}); return false;">Отправить
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
+                            </div>
+
+
 
                             </div>
                         {% endfor %}
@@ -209,9 +209,10 @@
 
 
 
-    {#    <script src="{% static 'js/info_profile_modal_window.js' %}"></script>#}
+    <script src="{% static 'js/info_profile_modal_window.js' %}"></script>
     <script src="{% static 'js/create_post_modal_window.js' %}"></script>
     <script src="{% static 'js/create_post.js' %}"></script>
     <script src="{% static 'js/delete_post.js' %}"></script>
+    <script src="{% static 'js/likeFunc.js' %}"></script>
     <script src="{% static 'js/add_comment.js' %}"></script>
 {% endblock %}

@@ -1,7 +1,7 @@
 import json
 from allauth.account.forms import ChangePasswordForm
 from django.views.generic import CreateView, UpdateView, DetailView, TemplateView
-from wall.models import Post
+from wall.models import Post, LikePostModel
 from django.contrib.auth.decorators import login_required
 
 from django.http import JsonResponse
@@ -18,6 +18,9 @@ class ProfileCreateView(CreateView):
     model = UserProfile
     form_class = UserProfileForm
     template_name = 'create_profile.html'
+
+    def get_success_url(self):
+        return reverse('profile_user', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
         print(form.cleaned_data)

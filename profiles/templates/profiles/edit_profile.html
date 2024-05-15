@@ -37,21 +37,21 @@
             <div class="col-md-8 "><br><br>
                 <!-- форма -->
                 <div class="svdig-forms">
-                    <form method="post" enctype="multipart/form-data" class="">
+                    <form name="profileForm" method="post" enctype="multipart/form-data" class="">
                         {% csrf_token %}
                         <div id="basic_info_section" style="display: none;">
                             <div id="nameFields">
                                 <br>
                                 <label for="lastName">Настоящее Имя:</label>
                                 <input id="lastName" type="text" name="last_name" maxlength="100"
-                                       value="{{ form.instance.full_name | get_name2 }}"
+                                       value="{{ form.instance.full_name | get_name }}"
                                        class="form-control edit-all-input mt-2" oninput="updateFullName()">
 
                                 <br>
 
                                 <label for="firstName">Настоящая Фамилия:</label>
                                 <input id="firstName" type="text" name="first_name" maxlength="100"
-                                       value="{{ form.instance.full_name | get_name }}"
+                                       value="{{ form.instance.full_name | get_name2 }}"
                                        class="form-control edit-all-input mt-2" oninput="updateFullName()">
                                 <br>
 
@@ -84,19 +84,22 @@
                                     {% endfor %}
                                 </select>
                             </div>
+                            <div class="mb-3">
+                                <div id="city_div" class="mb-3">
+                                    <label for="city" class="form-label">Город:</label>
+                                    <select id="city" name="city" class="form-select edit-all-input">
+                                        <option value="{{ form.instance.city.id }}">{{ form.instance.city.name }}</option>
+                                        <option value="">Select City</option>
 
-                            <div id="city_div" style="display:none;" class="mb-3">
-                                <label for="city" class="form-label edit-all-input">Город:</label>
-                                <select id="city" name="city" class="form-select">
-                                    <option value="0">Select City</option>
-                                </select>
+                                    </select>
+                                </div>
                             </div>
-
 
                             <div class="mb-3 birth_date-size">
                                 <label for="birth_date" class="form-label ">Дата рождения:</label>
                                 <input id="birth_date" type="text" name="birth_date"
-                                       value="{{ form.instance.birth_date }}" class="edit-all-input form-control ">
+                                       value="{{ form.instance.birth_date|date:"d/m/Y" }}"
+                                       class="edit-all-input form-control ">
 
                                 <div class="d-none d-md-block col-md-6 align-self-center img-avatar-osnova">
                                     <img src="{% static 'image/profile/lev.jpg' %}" alt="Изображение" class="img-fluid">
@@ -108,19 +111,29 @@
                         <br>
                         <div id="avatar_section" style="display: none;">
                             <div class="row">
-                                <div class="mb-3 col-6-avatar">
-                                    <label for="avatar" class="form-label">Avatar:</label>
+                                <div class="mb-3">
                                     <br>
-                                    <img id="avatarPreview" src="{{ form.instance.avatar.url }}" alt="Avatar Preview"
-                                         class="avatar-preview img-thumbnail avatar-size">
-                                    <br><br>
-                                    <input id="avatar" type="file" name="avatar" class="form-control "
-                                           onchange="previewAvatar()">
+                                    <img id="avatarPreview1" src="{% static 'image/default_avatar.jpg' %}"
+                                         alt="Avatar Preview"
+                                         class="avatar-preview img-thumbnail avatar-pre-img"
+                                         style="width: 128px; height: 128px;">
+                                    <span>128px</span>
+
+                                    <img id="avatarPreview2" src="{% static 'image/default_avatar.jpg' %}"
+                                         alt="Avatar Preview"
+                                         class="avatar-preview img-thumbnail avatar-pre-img2"
+                                         style="width: 96px; height: 96px;">
+                                    <span>96px</span>
+
+                                    <img id="avatarPreview3" src="{% static 'image/default_avatar.jpg' %}"
+                                         alt="Avatar Preview"
+                                         class="avatar-preview img-thumbnail avatar-pre-img3"
+                                         style="width: 64px; height: 64px;">
+                                    <span>64px</span>
+                                    <input id="avatar" type="file" name="avatar" onchange="previewAvatar(event)"
+                                           class="form-control mt-5 i-size2" multiple>
                                 </div>
 
-                                <div class="d-none d-md-block col-md-6 align-self-center img-avatar">
-                                    <img src="{% static 'image/profile/lis.jpg' %}" alt="Изображение" class="img-fluid">
-                                </div>
                             </div>
 
                             <br><br><br><br><br><br><br>
@@ -129,7 +142,8 @@
                         <div id="about_me_section" style="display: none;">
                             <div class="mb-1 mx-auto">
                                 <label for="bio" class="form-label">Bio:</label>
-                                <textarea id="bio" name="bio" rows="6" class="form-control bio-adap"></textarea>
+                                <textarea id="bio" name="bio" rows="6"
+                                          class="form-control bio-adap">{{ form.instance.bio }}</textarea>
                             </div>
                             <div class="d-none d-md-block col-md-6 align-self-center img-avatar-osnova">
                                 <img src="{% static 'image/profile/ma.jpg' %}" alt="Изображение" class="img-fluid">
@@ -137,8 +151,16 @@
                             <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                         </div>
 
-                        <!-- Блок изменения пароля -->
-                        <div id="change_password_section" style="display: none;">
+                        <div class="btn-sdvig-right d-flex justify-content-center mt-3">
+                            <a href="" class="btn btn-light mx-3">Отмена</a>
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </form>
+                    <!-- Блок изменения пароля -->
+                    <div id="change_password_section" style="display: none;">
+
+                        <form method="post" name="changePasswordForm">
+                            {% csrf_token %}
                             <div class="mb-3">
                                 <label for="id_oldpassword" class="form-label">Текущий пароль:</label>
                                 <input type="password" class="form-control edit-all-input" name="oldpassword"
@@ -167,17 +189,12 @@
                                 <input type="password" class="form-control edit-all-input" name="password2"
                                        placeholder="Новый пароль(повторить)" required="" id="id_password2">
                             </div>
-{#                            <button name="change_password_button" type="submit" class="btn btn-success">Изменить#}
-{#                                текущий пароль#}
-{#                            </button>#}
-                        </div>
-                        <!-- Конец блока изменения пароля -->
-
-                        <div class="btn-sdvig-right d-flex justify-content-center mt-3">
-                            <a href="" class="btn btn-light mx-3">Отмена</a>
-                            <button name='form' type="submit" class="btn btn-primary">Сохранить</button>
-                        </div>
-                    </form>
+                            <button name="change_password_button" type="submit" class="btn btn-success">Изменить
+                                текущий пароль
+                            </button>
+                        </form>
+                    </div>
+                    <!-- Конец блока изменения пароля -->
                 </div>
             </div>
         </div>
@@ -204,6 +221,6 @@
     <script src="{% static 'js/get_cities_country.js' %}"></script>
     <script src="{% static 'js/make_full_name.js' %}"></script>
     <script src="{% static 'js/preview_avatar.js' %}"></script>
-
+    <script src="{% static 'js/validation_edit_forms.js' %}"></script>
     <script src="{% static 'js/datepicker.js' %}"></script>
 {% endblock %}
