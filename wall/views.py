@@ -51,36 +51,31 @@ class PostDeleteAPIView(APIView):
         return Response({'detail': 'Пост успешно удален'}, status=status.HTTP_200_OK)
 
 
-class LikeCreateAPIView(APIView):
+class LikeAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         post_id = request.data.get('post_id')
-        user = request.user
+        user_profile = request.user.userprofile
+        post = Post.objects.get(pk=post_id)
 
         try:
-            LikePostModel.objects.get(post_id=post_id, user=user)
+            LikePostModel.objects.get(post_id=post_id, user_profile=user_profile)
 
-            return Response({'detail': 'Лайк уже существует'}, status=status.HTTP_400_BAD_REQUEST)
+            LikePostModel.objects.filter(post_id=post_id, user_profile=user_profile).delete()
+            if post.likes_count != 0:
+                post.likes_count -= 1
+            else:
+                post.likes_count = 0
+            post.save()
+            return Response({'detail': 'Лайк удален', 'likes_count': post.likes_count}, status=status.HTTP_200_OK)
+
         except LikePostModel.DoesNotExist:
-            LikePostModel.objects.create(post_id=post_id, user=user)
-            return Response({'detail': 'Лайк успешно создан'}, status=status.HTTP_201_CREATED)
+            post.likes_count += 1
+            LikePostModel.objects.create(post_id=post_id, user_profile=user_profile)
+            post.save()
+            return Response({'detail': 'Лайк создан', 'likes_count': post.likes_count}, status=status.HTTP_201_CREATED)
 
-
-class LikeDeleteAPIView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-
-    def delete(self, request, *args, **kwargs):
-
-        post_id = request.data.get('post_id')
-        user = request.user
-
-        try:
-            like = LikePostModel.objects.get(post_id=post_id, user=user)
-            like.delete()
-            return Response({'detail': 'Лайк успешно удален'}, status=status.HTTP_200_OK)
-        except LikePostModel.DoesNotExist:
-            return Response({'detail': 'Лайк не найден'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class CommentCreateAPIView(APIView):

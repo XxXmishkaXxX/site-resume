@@ -21,3 +21,7 @@ def get_name2(full_name):
 @register.filter
 def get_middle_name(full_name):
     return full_name.split()[2]
+
+@register.filter
+def is_liked_by(post, user):
+    return bool(post.like_for_post.filter(user_profile=user.userprofile))

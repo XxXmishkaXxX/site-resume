@@ -35,8 +35,6 @@ $(document).ready(function () {
                         errorHTML += "Ошибка с датой";
                         errorHTML += '<br>';
                     }
-                    else{
-                        errorHTML += key}
                 }
             }
 

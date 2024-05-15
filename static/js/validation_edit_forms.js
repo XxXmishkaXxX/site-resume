@@ -39,7 +39,8 @@ $(document).ready(function() {
 
         // Создаем объект FormData для сбора данных формы
         var formData = new FormData(this);
-
+        console.log("!!!")
+        console.log(formData.values())
         // Отправляем данные формы на сервер с помощью AJAX
         $.ajax({
             url: $(this).attr('action'),
@@ -49,6 +50,7 @@ $(document).ready(function() {
                 location.reload();
             },
             error: function(xhr, textStatus, errorThrown) {
+                console.log(xhr.data)
                 var errorData = xhr.responseJSON;
                 showErrors(errorData);
             },
