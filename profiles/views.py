@@ -65,7 +65,7 @@ class ProfileEditView(UpdateView):
         return context
 
     def post(self, request, *args, **kwargs):
-
+        print(request.POST)
         form_name = request.POST.get('form_name')
         if form_name == 'changePasswordForm':
 
