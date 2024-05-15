@@ -7,6 +7,14 @@
     <list default="true" id="88d07dbe-dae5-4df1-ad8b-327055869853" name="Changes" comment="">
 <<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+=======
+      <change beforePath="$PROJECT_DIR$/profiles/templates/profiles/edit_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/profiles/templates/profiles/edit_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/style/style-profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style/style-profile.css" afterDir="false" />
+=======
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> d0cb5bda1995854d977fff94b4e8aed415f4d7dd
 =======
       <change afterPath="$PROJECT_DIR$/api/__init__.py" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/api/admin.py" afterDir="false" />
@@ -66,6 +74,10 @@
       <change beforePath="$PROJECT_DIR$/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/views.py" afterDir="false" />
 >>>>>>> ec9b49c31bd70d8610ed6bf9f43768e6909da04a
+<<<<<<< HEAD
+=======
+>>>>>>> 0f6fee76d5247040acd2dca010de706cc84fee70
+>>>>>>> d0cb5bda1995854d977fff94b4e8aed415f4d7dd
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

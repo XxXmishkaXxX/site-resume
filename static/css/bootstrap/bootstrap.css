@@ -876,6 +876,11 @@ progress {
   width: 50%;
 }
 
+.col-6-avatar {
+  flex: 0 0 auto;
+  width: 50%;
+}
+
 .col-7 {
   flex: 0 0 auto;
   width: 58.33333333%;
@@ -1224,6 +1229,7 @@ progress {
     flex: 0 0 auto;
     width: 16.66666667%;
   }
+
   .col-md-3 {
     flex: 0 0 auto;
     width: 25%;
@@ -8122,7 +8128,9 @@ textarea.form-control-lg {
   margin-left: 5rem !important;
 }
 
-
+.ms-7 {
+  margin-left: 11rem !important;
+}
 
 .ms-auto {
   margin-left: auto !important;

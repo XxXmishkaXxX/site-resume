@@ -2,185 +2,216 @@
 {% load static %}
 {% load main_tags %}
 {% block content %}
-
-    <style>
-        {#информационне окно об профиле человека#}
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        {#___________#}
-    </style>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/style/style-base.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/style/style-profile.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/style/style-profile-v2.css' %}"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
 
 
-    <div class="main_info">
-        <div class="avatar">
-            <img src="{{ profile.avatar.url }}" alt="avatar" style="max-width: 300px;">
-        </div>
-        <div class="full_name">
-            <h1>{{ profile.full_name | remove_middle_name }}</h1>
-        </div>
-        <div class="city">
-            {% if profile.city %}
-                <p>{{ profile.city.name }}</p>
-            {% endif %}
-        </div>
-        <button id="openModalBtn">Подробнее</button>
 
-        <div id="modal" class="modal">
-            <div class="modal-content">
-                <div class="info">
-                    <span class="close">&times;</span>
-                    <p>{{ profile.birth_date }}</p>
-                    <p>{{ profile.country.name }}</p>
-                    <p>{{ profile.city.name }}</p>
-                    <p>{{ profile.bio }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="container">
+        <div class="row">
 
-    {% if profile.pk == user.pk %}
-        <div class="edit_profile">
-            <button><a href="{% url 'edit_profile' user.pk %}">Редактирование профиля</a></button>
-        </div>
-        <div class="add_post">
-            <button id="openModalFormCreatePostBtn">Загрузить работу</button>
-        </div>
-        <div id="modalCreatePost" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <form id="createForm">
-                    {% csrf_token %}
-                    <textarea id="postContent" placeholder="Введите текст поста"></textarea>
-                    <input type="file" id="postImages" multiple>
-                    {#                    <input type="file" id="postVideos" multiple>#}
-                    <button type="submit" onclick="createPost()" id="createPostBtn">Отправить</button>
-                </form>
-            </div>
-        </div>
-    {% endif %}
-
-    <div>
-        <div class="container" id="postContainer">
-            {% for post in posts %}
-                <div class="card" id="post-{{ post.id }}">
-                    <p class="date">{{ post.created_at }}</p>
-                    <p class="card-text">{{ post.content }}</p>
-                    <div class="container_images">
-                        <div class="row">
-                            {% if post.images %}
-                                {% for image in post.images.all %}
-                                    <div class="col-lg-6">
-                                        <div class="thumbnail">
-                                            <div class="img-container">
-                                                <img src="{{ image.image.url }}" alt="Post Image"
-                                                     style="max-width: 200px;">
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
+            <div class="col-12" style="background-color: #FBF8F8; padding: 2rem; margin: 0 auto; ">
+                <br><br><br><br>
+                <div class="profile-container d-flex align-items-center " style="border-radius:25px;">
+                    <div class="avatar">
+                        <img src="{{ profile.avatar.url }}" alt="avatar" class="ava-pre-img">
+                    </div>
+                    <div class="profile-info ms-7 " style="max-width: 300px;">
+                        <div class="full_name" style="max-width: 300px;">
+                            <h3>{{ profile.full_name | remove_middle_name }}</h3>
+                        </div>
+                        <div class="city">
+                            {% if profile.city %}
+                                <p>Город: {{ profile.city.name }}</p>
                             {% endif %}
                         </div>
-                    </div>
+                        <br>
+                        <button id="openModalBtn" class="btn btn-outline-dark">Подробнее</button>
 
-                    {% if post.video %}
-                        <video controls>
-                            <source src="{{ post.video.video_file.url }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    {% endif %}
-
-                    {% if profile.pk == user.pk %}
-                        <form id="deleteForm">
-                            {% csrf_token %}
-                            <!-- Кнопка для удаления поста -->
-                            <button type="button" onclick="deletePost({{ post.id }})">Delete</button>
-                        </form>
-                    {% endif %}
-
-                    <div class="like">
-                        <button onclick="likePost({{ post.id }})">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 1024 1024"
-                                 class="icon" version="1.1">
-                                <path d="M725.333333 192c-89.6 0-168.533333 44.8-213.333333 115.2C467.2 236.8 388.266667 192 298.666667 192 157.866667 192 42.666667 307.2 42.666667 448c0 253.866667 469.333333 512 469.333333 512s469.333333-256 469.333333-512c0-140.8-115.2-256-256-256z"
-                                      fill="#FFCDD2"/>
-                            </svg>
-                        </button>
-                        {{ post.likes_count }}
-                    </div>
-                    <div class="views">
-                        {{ post.views_count }}
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="10px" height="10px"
-                             viewBox="0 0 32 32" version="1.1">
-                            <path d="M16.108 10.044c-3.313 0-6 2.687-6 6s2.687 6 6 6 6-2.686 6-6-2.686-6-6-6zM16.108 20.044c-2.206 0-4.046-1.838-4.046-4.044s1.794-4 4-4c2.206 0 4 1.794 4 4s-1.748 4.044-3.954 4.044zM31.99 15.768c-0.012-0.050-0.006-0.104-0.021-0.153-0.006-0.021-0.020-0.033-0.027-0.051-0.011-0.028-0.008-0.062-0.023-0.089-2.909-6.66-9.177-10.492-15.857-10.492s-13.074 3.826-15.984 10.486c-0.012 0.028-0.010 0.057-0.021 0.089-0.007 0.020-0.021 0.030-0.028 0.049-0.015 0.050-0.009 0.103-0.019 0.154-0.018 0.090-0.035 0.178-0.035 0.269s0.017 0.177 0.035 0.268c0.010 0.050 0.003 0.105 0.019 0.152 0.006 0.023 0.021 0.032 0.028 0.052 0.010 0.027 0.008 0.061 0.021 0.089 2.91 6.658 9.242 10.428 15.922 10.428s13.011-3.762 15.92-10.422c0.015-0.029 0.012-0.058 0.023-0.090 0.007-0.017 0.020-0.030 0.026-0.050 0.015-0.049 0.011-0.102 0.021-0.154 0.018-0.090 0.034-0.177 0.034-0.27 0-0.088-0.017-0.175-0.035-0.266zM16 25.019c-5.665 0-11.242-2.986-13.982-8.99 2.714-5.983 8.365-9.047 14.044-9.047 5.678 0 11.203 3.067 13.918 9.053-2.713 5.982-8.301 8.984-13.981 8.984z"/>
-                        </svg>
-                    </div>
-                    <div class="comments">
-                        <p>Комментарии</p>
-                        <div id="comments_list_{{ post.id }}">
-                            {% for comment in post.comment_for_post.all %}
-                                <div class="comment">
-                                    <div class="avatar">
-                                        <img src="{{ comment.user_profile.avatar.url }}" alt="avatar-commenter" style="max-width: 50px">
+                        <div id="modal" class="modal">
+                            <div class="modal-content">
+                                <div class="info">
+                                    <span class="close">&times;</span>
+                                    <div class="birth_date">
+                                        <p>{{ profile.birth_date }}</p>
                                     </div>
-                                    <div class="full_name">
-                                        <p>{{ comment.user_profile.full_name | remove_middle_name }}</p>
+                                    <div class="country">
+                                        <p>{{ profile.country.name }}</p>
                                     </div>
-                                    <div class="comment_text">{{ comment.text }}</div>
-                                    <div class="date-create-comment">{{ comment.created_at }}</div>
+                                    <div class="city">
+                                        <p>{{ profile.city.name }}</p>
+                                    </div>
+                                    <div class="bio">
+                                        <p>{{ profile.bio }}</p>
+                                    </div>
                                 </div>
-                            {% endfor %}
+                            </div>
                         </div>
-                        <form id="addComment_{{ post.id }}">
-                            {% csrf_token %}
-                            <textarea id="commentText_{{ post.id }}"></textarea>
-                            <button onclick="addComment({{ post.id }}); return false;">Отправить</button>
-                        </form>
                     </div>
-                </div>
-            {% endfor %}
+                    {% if profile.pk == user.pk %}
+
+                        <div class="profile-container d-flex align-items-center ">
+                            <div class="main_info me-auto">
+                                <!-- main_info content here -->
+                            </div>
+                            <div class="edit_profile me-4">
+                                <a href="{% url 'edit_profile' user.pk %}" style="text-decoration: none;
+                color:white;" class="btn btn-primary">Редактирование профиля</a>
+                            </div>
+                            <div class="add_post">
+                                <button id="openModalFormCreatePostBtn" class="btn btn-success">Загрузить работу
+                                </button>
+                            </div>
+
+                        </div>
+
+
+                        </div>
+                        <img src="/static/image/profile/1.svg" alt="alasldkmasldkmasldkaslkdmaslkmd"
+                             class="img-center-profile mb-3">
+
+                        <br>
+                        <div id="modalCreatePost" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <form id="createForm">
+                                    {% csrf_token %}
+                                    <textarea id="postContent" placeholder="Введите текст поста" rows="3"
+                                              style="height: 20rem; width: 90.5rem;"></textarea><br>
+                                    <input type="file" id="postImages" multiple>
+                                    <br>
+                                    <div class="form-group">
+                                        {#                    <input type="file" id="postVideos" multiple>#}
+                                    </div>
+                                    <button type="submit" onclick="createPost()" id="createPostBtn"
+                                            class="btn btn-primary">Отправить
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                <br>
+                <div>
+                    <div class="container" id="postContainer">
+                        {% for post in posts %}
+                            <div class="card" id="post-{{ post.id }}">
+                                <p class="date "><br>&nbsp;&nbsp;&nbsp;&nbsp;Дата публикации: {{ post.created_at }}</p>
+                                <p class="card-text"><br>&nbsp;&nbsp;&nbsp;&nbsp;Ваше сообщение: {{ post.content }}</p>
+                                <div class="container_images">
+                                    <div class="row">
+                                        {% if post.images %}
+                                            {% for image in post.images.all %}
+                                                <div class="row row-cols-2">
+                                                <div class="col-lg-6">
+                                                    <div class="thumbnail">
+                                                        <div class="img-container ms-3">
+                                                            <img src="{{ image.image.url }}" alt="Post Image"
+                                                                 style="max-width: 200px; border-radius: 20px;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% if post.video %}
+                                    <video controls class="w-100">
+                                        <source src="{{ post.video.video_file.url }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                {% endif %}
+
+
+                                <div class="d-flex align-items-center">
+                                    <div class="like ms-3">
+                                        <button onclick="likePost({{ post.id }})"
+                                                class="btn btn-outline-danger me-2 mt-4">
+                                            <b><i id="heart-svg" class="bi bi-heart"> </i></b>{{ post.likes_count }}
+                                        </button>
+                                    </div>
+
+                                    {% if profile.pk == user.pk %}
+                                        <form id="deleteForm">
+                                            {% csrf_token %}
+                                            <!-- Кнопка для удаления поста -->
+                                            <br>
+                                            <button type="button"
+                                                    class="me-2 btn btn-outline-dark"
+                                                    onclick="deletePost({{ post.id }})">Удалить
+                                            </button>
+                                        </form>
+                                        <div class="views   mt-4">
+                                            <i class="bi bi-eye"></i> <b>{{ post.views_count }} </b>
+                                        </div>
+                                        </div><br>
+
+
+                                        </div>
+                                        </div>
+
+
+
+                                    {% endif %}
+
+                            <br>
+                            <!-- коменты -->
+                            <div class="comments">
+                                <h5>Комментарии</h5>
+                                <div id="comments_list_{{ post.id }}">
+                                    {% for comment in post.comment_for_post.all %}
+                                        <div class="comment d-flex align-items-center">
+                                            <div class="avatar me-2">
+                                                <img src="{{ comment.user_profile.avatar.url }}" alt="avatar-commenter"
+                                                     style="max-width: 50px">
+                                            </div>
+                                            <div class="comment-info">
+                                                <div class="full_name">
+                                                    <p>{{ comment.user_profile.full_name | remove_middle_name }}</p>
+                                                </div>
+                                                <div class="comment_text">{{ comment.text }}</div>
+                                                <div class="date-create-comment">{{ comment.created_at }}</div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <form id="addComment_{{ post.id }}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <textarea id="commentText_{{ post.id }}" class="form-control"
+                                                  rows="3"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary"
+                                            onclick="addComment({{ post.id }}); return false;">Отправить
+                                    </button>
+                                </form>
+                            </div>
+
+                            </div>
+                        {% endfor %}
+            </div>
         </div>
     </div>
-{#    <script src="{% static 'js/info_profile_modal_window.js' %}"></script>#}
+    </div>
+    </div>
+
+
+
+
+
+
+    {#    <script src="{% static 'js/info_profile_modal_window.js' %}"></script>#}
     <script src="{% static 'js/create_post_modal_window.js' %}"></script>
     <script src="{% static 'js/create_post.js' %}"></script>
     <script src="{% static 'js/delete_post.js' %}"></script>
     <script src="{% static 'js/add_comment.js' %}"></script>
 {% endblock %}
-

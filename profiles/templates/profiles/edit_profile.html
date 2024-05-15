@@ -2,7 +2,6 @@
 {% load static %}
 {% load main_tags %}
 {% block content %}
-
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -23,12 +22,10 @@
         <div class="row ms-custom-edit">
             <div class="col-md-3">
                 <div class="d-grid gap-2 mt-5" style="max-width: 200px;">
-                    <button type="button" onclick="showSection('basic_info')" class="profile-all">Основное</button>
-                    <button type="button" onclick="showSection('avatar')" class="profile-all">Аватар</button>
-                    <button type="button" onclick="showSection('about_me')" class="profile-all">О себе</button>
-                    <button type="button" onclick="showSection('change_email')" class="profile-all">Изменить почту
-                    </button>
-                    <button type="button" onclick="showSection('change_password')" class="profile-all">Изменить пароль
+                    <button onclick="showSection('basic_info')" class="btn btn-outline-primary">Основное</button>
+                    <button onclick="showSection('avatar')" class="btn btn-outline-primary">Аватар</button>
+                    <button onclick="showSection('about_me')" class="btn btn-outline-primary">О себе</button>
+                    <button onclick="showSection('change_password')" class="btn btn-outline-primary">Изменить пароль
                     </button>
 
                     <a class="mt-2 abtn" style="" href="http://127.0.0.1:8000/">На главную</a>
@@ -38,9 +35,9 @@
             <!-- фото -->
 
 
-            <div class="col-md-8 mt-5 "><br><br>
+            <div class="col-md-8 "><br><br>
                 <!-- форма -->
-                <div class="me-6">
+                <div class="svdig-forms">
                     <form method="post" enctype="multipart/form-data" class="">
                         {% csrf_token %}
                         <div id="basic_info_section" style="display: none;">
@@ -97,56 +94,106 @@
                             </div>
 
 
-                            <div class="mb-3" style="width: 31.5rem;">
+                            <div class="mb-3 birth_date-size">
                                 <label for="birth_date" class="form-label ">Дата рождения:</label>
                                 <input id="birth_date" type="text" name="birth_date"
                                        value="{{ form.instance.birth_date }}" class="edit-all-input form-control ">
+
+                                <div class="d-none d-md-block col-md-6 align-self-center img-avatar-osnova">
+                                    <img src="{% static 'image/profile/lev.jpg' %}" alt="Изображение" class="img-fluid">
+                                </div>
                             </div>
+
+
                         </div>
                         <br>
                         <div id="avatar_section" style="display: none;">
                             <div class="row">
-                                <div class="mb-3 col-6">
+                                <div class="mb-3 col-6-avatar">
                                     <label for="avatar" class="form-label">Avatar:</label>
                                     <br>
                                     <img id="avatarPreview" src="{{ form.instance.avatar.url }}" alt="Avatar Preview"
-                                         class="avatar-preview img-thumbnail" style="max-width: 25rem;">
+                                         class="avatar-preview img-thumbnail avatar-size">
                                     <br><br>
-                                    <input id="avatar" type="file" name="avatar" class="px-3 form-control"
+                                    <input id="avatar" type="file" name="avatar" class="form-control "
                                            onchange="previewAvatar()">
                                 </div>
 
-                                <div class="d-none d-md-block col-md-6 align-self-center">
-                                    <img src="{% static 'image/profile/lis.png' %}" alt="Изображение"
-                                         class="img-fluid img-avatar">
+                                <div class="d-none d-md-block col-md-6 align-self-center img-avatar">
+                                    <img src="{% static 'image/profile/lis.jpg' %}" alt="Изображение" class="img-fluid">
                                 </div>
                             </div>
 
-
+                            <br><br><br><br><br><br><br>
                         </div>
+
+                        <div id="change_password_section" style="display: none;">
+                            <form name="changePasswordForm" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <!-- Форма смены пароля -->
+                                <div class="mb-3">
+                                    <label for="id_oldpassword" class="form-label">Текущий пароль:</label>
+                                    <input type="password" class="form-control edit-all-input" name="oldpassword"
+                                           placeholder="Текущий пароль" autocomplete="current-password" required=""
+                                           id="id_oldpassword">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_password1" class="form-label">Новый пароль:</label>
+                                    <input type="password" class="form-control edit-all-input" name="password1"
+                                           placeholder="Новый пароль" autocomplete="new-password" required=""
+                                           aria-describedby="id_password1_helptext" id="id_password1">
+                                    <span class="helptext" id="id_password1_helptext"></span>
+                                </div>
+
+                                <ul>
+                                    <li style="width: 50%;">Ваш пароль не должен быть слишком похож на другие ваши
+                                        персональные данные.
+                                    </li>
+                                    <li>Ваш пароль должен содержать не менее 8 символов.</li>
+                                    <li>Ваш пароль не может быть обычным паролем.</li>
+                                    <li>Ваш пароль не может быть полностью цифровым.</li>
+                                </ul>
+
+                                <div class="mb-3">
+                                    <label for="id_password2" class="form-label">Новый пароль(повторить):</label>
+                                    <input type="password" class="form-control edit-all-input" name="password2"
+                                           placeholder="Новый пароль(повторить)" required="" id="id_password2">
+                                </div>
+                                <button name="change_password_button" type="submit" class="btn btn-success">Изменить
+                                    текущий пароль
+                                </button>
+
+
+                                <div class="d-none d-md-block col-md-6 align-self-center img-avatar">
+                                    <img src="{% static 'image/profile/margo.jpg' %}" alt="Изображение"
+                                         class="img-fluid">
+                                </div>
+                                <br><br><br><br><br><br><br>
+                            </form>
+                        </div>
+
+
                         <div id="about_me_section" style="display: none;">
-                            <div class="mb-3">
+                            <div class="mb-1 mx-auto">
                                 <label for="bio" class="form-label">Bio:</label>
                                 <textarea id="bio" name="bio" rows="6" class="form-control bio-adap"></textarea>
                             </div>
+                            <div class="d-none d-md-block col-md-6 align-self-center img-avatar-osnova">
+                                <img src="{% static 'image/profile/ma.jpg' %}" alt="Изображение" class="img-fluid">
+                            </div>
+                            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                         </div>
 
-                        <div class="btn-sdvig-right d-flex justify-content-end mt-3">
+                        <div class="btn-sdvig-right d-flex justify-content-center mt-3">
                             <a href="" class="btn btn-light mx-3">Отмена</a>
                             <button type="submit" class="btn btn-primary">Сохранить</button>
                         </div>
                     </form>
                 </div>
+
+
             </div>
 
-            <div id="change_email_section" style="display: none;">
-                <!-- Change Password Fields -->
-                <!-- Add your change password fields here -->
-            </div>
-            <div id="change_password_section" style="display: none;">
-                <!-- Change Password Fields -->
-                <!-- Add your change password fields here -->
-            </div>
         </div>
 
     </div>
@@ -161,7 +208,6 @@
 
 
     <!-- скрипт бутера меню -->
-
     <script>
         var currentSection = null;
 
@@ -177,41 +223,9 @@
         }
     </script>
 
-    <script>
-        function loadCities() {
-            var country_name = $('#country').val();
-            $.ajax({
-                url: "/api/get_cities_by_country/" + country_name + "/",
-                type: "GET",
-                success: function (data) {
-                    var citySelect = $('#city');
-                    var selectedCityId = citySelect.val(); // Сохраняем ID выбранного города, если есть
-
-                    citySelect.empty();
-
-                    $.each(data, function (index, city) {
-                        citySelect.append($('<option>', {
-                            value: city.id,
-                            text: city.name
-                        }));
-                    });
-
-                    if (selectedCityId) { // Если был выбран город, устанавливаем его после загрузки данных
-                        citySelect.val(selectedCityId);
-                    }
-
-                    $('#city_div').show();
-                },
-                error: function (xhr, errmsg, err) {
-                    console.log(xhr.status + ": " + xhr.responseText); // Отображение ошибки в консоли браузера
-                }
-            });
-        }
-    </script>
     <script src="{% static 'js/get_cities_country.js' %}"></script>
     <script src="{% static 'js/make_full_name.js' %}"></script>
     <script src="{% static 'js/preview_avatar.js' %}"></script>
+    <!--<script src="{% static 'js/form_validation.js' %}"></script>-->
     <script src="{% static 'js/datepicker.js' %}"></script>
-    <script src="{% static 'js/validation_edit_forms.js' %}"></script>
-
 {% endblock %}
